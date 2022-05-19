@@ -1,0 +1,24 @@
+$font_1 : 'Open Sans', sans-serif;
+$font_2 : 'Merriweather', serif;
+$font_icon: FontAwesome;
+
+$black_1: #043140;
+$black_2: #999999;
+$black_3: #666666; // body
+$black_4: #333333;
+$blue_1: #12aaeb;
+$blue_2: #043140; // navbar color, heading
+$blue_3: #1C222A; // footer copyright
+$orange: #f6ba18;
+$white: #ffffff;
+
+@mixin border-radius($radius){
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	-ms-border-radius: $radius;
+	border-radius: $radius;
+}
+
+.bolder{
+	font-weight: 600;
+}

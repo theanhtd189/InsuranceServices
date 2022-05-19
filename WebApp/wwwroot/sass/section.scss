@@ -1,0 +1,263 @@
+/* 6.1 - About */
+.banner-page.about{
+	background: url('../images/slide2-2.jpg') bottom center no-repeat;
+}
+
+dl.hiw{
+	width: 100%;
+	dt{
+		width: 30px;
+		float: left;
+		.fa{
+			font-size: 24px;
+			color: $blue_1;
+		}
+	}
+	dd{
+	    margin-left: 60px;
+		margin-bottom: 40px;
+		h4{
+			clear: none;
+		}
+	}
+}
+.vidimg{
+	position: relative;
+	.play-vid{
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		-webkit-transform: translate(-50%,-50%);
+	    -ms-transform: translate(-50%,-50%);
+	    transform: translate(-50%,-50%);
+		width: 72px;
+		height: 72px;
+		background-color: $blue_1;
+		@include border-radius(50%);
+		display: block;
+		border: 2px solid $white;
+	    padding-top: 13px;
+	    padding-left: 7px;
+	    text-align: center;
+		a{
+			color: $white;
+
+		}
+			&:hover{
+				background-color: $orange;
+			}
+	}
+}
+
+/* 6.2 - Services */
+.banner-page.services{
+	background: url('../images/slide2-2.jpg') bottom center no-repeat;
+}
+.title-agent{
+	color: $black_1;
+	font-size: 26px;
+}
+
+/* 6.3 - Pages */
+.banner-page.pages{
+	background: url('../images/slide2-2.jpg') bottom center no-repeat;
+}
+/* 6.3 - Projects */
+.banner-page.project{
+	background: url('../images/slide2-2.jpg') bottom center no-repeat;
+}
+
+/* 6.4 - News */
+.banner-page.news{
+	background: url('../images/slide2-2.jpg') bottom center no-repeat;
+}
+.single-news{
+	.image{
+		position: relative;
+		.meta-date{
+			position: absolute;
+			bottom: 40px;
+			left: 0;
+			width: 70px;
+			height: 70px;
+			border-top-right-radius: 50%;
+			border-bottom-right-radius: 50%;
+			background-color: $orange;
+		    font-size: 26px;
+			font-weight: 600;
+    		color: #fff;
+    		text-align: center;
+    		padding-top: 13px;
+    		span{
+			    font-size: 14px;
+    			display: block;
+    		}
+		}
+	}
+	.section-heading{
+		color: $blue_2;
+		font-size: 24px;
+		font-weight: 700;
+		margin-bottom: 0px;
+		line-height: normal;
+	}
+	.meta-author{
+		color: $blue_1;
+		font-style: italic;
+		font-size: 12px;
+	}
+}
+
+/* 6.5 - Contact */
+.contact{
+	.form-control{
+		height: 45px;
+	    background-color: #f6f6f6;
+        border: 1px solid #eee;
+        border-radius: 3px;
+        box-shadow: none;
+	}
+	textarea.form-control{
+		height: auto;
+	}
+}
+.maps-wraper{
+	position:relative;
+}
+.maps{
+	width:100%;
+	height:350px;
+	display:block;
+	background:#ccc;
+	position:relative;
+}
+#google-container {
+	position: relative;
+	width: 100%;
+	height: 500px;
+	background-color: #fff;
+}
+#cd-google-map {
+	position: relative;
+	overflow: hidden;
+}
+#cd-google-map .col-md-12 {
+	padding: 0;
+}
+#cd-google-map .address {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	padding: 20px 0;
+	background-color: rgba(5, 5, 5, 0.9);
+}
+#cd-google-map .address .address-item {
+	position: relative;
+	padding-left: 44px;
+}
+#cd-google-map .address .address-item i {
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	top: 0;
+	left: 4px;
+	color: #fcfcfc;
+	font-size: 22px;
+	text-align: center;
+	line-height: 24px;
+}
+#cd-zoom-in,
+#cd-zoom-out {
+	height: 32px;
+	width: 32px;
+	cursor: pointer;
+	margin-left: 10px;
+	background-color: $blue_1;
+	background-repeat: no-repeat;
+	background-size: 32px 64px;
+	background-image: url('../images/cd-icon-controller.svg');
+}
+.no-touch #cd-zoom-in:hover,
+.no-touch #cd-zoom-out:hover {
+	background-color: $blue_2;
+}
+#cd-zoom-in {
+	background-position: 50% 0;
+	margin-top: 10px;
+	margin-bottom: 1px;
+}
+#cd-zoom-out {
+	background-position: 50% -32px;
+}
+
+/* 6.6 Section - Features */
+
+/* 6.7 Section - CTA */
+.cta{
+	background-color: $blue_1;
+	padding: 20px 0;
+
+	.cta-desc{
+		font-family: $font_1;
+		color: $white;
+		font-style: italic;
+		font-size: 24px;
+    	line-height: 34px;
+    	font-weight: 400;
+	}
+}
+
+/* 6.8 - Price */
+
+
+/* 6.9 - Partners */
+.client-img{
+	text-align: center;
+	margin-bottom: 40px;
+	img{
+		margin: 0 auto;
+	}
+}
+
+/* 6.10 - Testimony */
+.people,
+.user-pic{
+	display: block;
+    max-width: 100%;
+}
+
+.testimony{
+	.owl-theme .owl-controls{
+		text-align: left;
+		margin-left: 80px;
+		margin-top: 30px;
+	}
+	.owl-theme .owl-dots .owl-dot span{
+	    background: #e7e7e7;
+	}
+	.owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span{
+		background: $blue_1;
+	}
+}
+
+
+/* 6.11 - 404 Page */
+.title-404{
+	font-size: 5em;
+	color: $black_1;
+    margin-bottom: -20px;
+}
+.subtitle-404{
+	font-size: 2em;
+	color: $blue_1;
+}
+
+/* 6.12 - Pages */
+.banner-page.pages{
+	background: url('../images/slide2-2.jpg') bottom center no-repeat;
+}
+/* 6.12 - Contact */
+.banner-page.contact{
+	background: url('../images/slide2-2.jpg') bottom center no-repeat;
+}

@@ -1,0 +1,130 @@
+/* 4.1 - TOPBAR */
+.topbar{
+	background-color: $blue_1;
+	padding: 0 0;
+	height: 40px;
+
+	.topbar-left{
+		.welcome-text{
+			font-style: italic;
+			color: $white;
+		    padding: 8px 0;
+		}
+	}
+	.topbar-right{
+		text-align: right;
+		.topbar-menu{
+			display: inline-table;
+			li{
+				list-style: none;
+				float: left;
+				color: $white;
+				padding: 0 0px;
+				font-size: 12px;
+				&:before{
+					content: '|';
+					padding: 0 10px;
+				}
+				&:last-child:after{
+					content: '|';
+					padding: 0 10px;
+				}
+				a{
+					color: $white;
+					&:hover{
+						color: $orange;
+					}
+				}
+			}
+		}
+		.topbar-sosmed{
+			display: inline-table;
+			li{
+				list-style: none;
+				float: left;
+				font-size: 18px;
+				padding: 0 10px;
+				a{
+					color: $white;
+					&:hover{
+						color: $orange;
+					}
+				}
+			}
+		}
+	}
+}
+
+.topbar-logo{
+	background-color: $white;
+    padding: 5px 0;
+	.navbar-brand{
+		height: auto;
+	}
+}
+.contact-info{
+	float: right;
+    margin-top: 17px;
+	> div{
+		display: inline-table;
+		margin-right: 40px;
+	}
+}
+.navbar-toggle .icon-bar {
+     background: $white;
+}
+.navbar-toggle{
+	float: left;
+}
+
+/* 4.2 - NAVBAR */
+.navbar-main {
+  background-color: $blue_2;
+  border-radius: 0;
+  margin-bottom: 0;
+  border: 0;
+  ol, li{
+  	margin: 0 0;
+	font-size: 12px;
+	font-weight: 700;
+  }
+  .nav > li > a {
+	color: $white;
+  }
+  .nav > li.active > a,
+  .nav > li > a:hover,
+  .nav > li > a:focus {
+    color: $orange;
+    background-color: transparent;
+  }  
+  .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+    background-color: transparent;
+    border-color: transparent;
+    color: $orange;
+  }
+  .caret {
+    margin-left: 10px;
+  }
+
+  .dropdown-menu{
+    background-color: $blue_2;
+    min-width: 180px;
+    color: $white;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    > li{
+    	text-transform: uppercase;
+    	border-bottom: 1px solid #222;
+    	a{
+    		padding: 10px 20px;
+		    color: $white;
+		    &:hover{
+	    	    background-color: $orange;
+		    }
+    	}
+    }
+  }
+
+
+}

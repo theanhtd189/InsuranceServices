@@ -1,0 +1,112 @@
+@media (max-width: 1199px) {
+
+}
+
+@media (max-width: 992px) {
+
+}
+
+@media (max-width: 768px) {
+	.topbar{
+		height: auto;
+	}
+	.topbar-left{
+		text-align: center;
+	}
+	.topbar-right{
+		text-align: center !important;
+	}
+	.topbar-menu,.topbar-sosmed{
+		margin-left: 0;
+	    margin-bottom: 0;
+	}
+	.navbar-brand{
+        width: 100%;
+		> img{
+		    margin: 0 auto;
+		}
+	}
+
+	.nav > li > a {
+	    padding: 10px 6px;
+	}
+
+	.contact-info{
+		clear: right;
+	    width: 100%;
+		> div{
+			display: block;
+			margin-right: 0px;
+		}
+	}
+
+	.box-icon-1{
+	
+		.icon{
+		    clear: left;
+		    display: block;
+		    width: 100%;
+		    text-align: center;
+		}
+		.body-content{
+	        text-align: center;
+		    margin-left: 0;
+		}
+	}
+
+	.container-nav .btn-orange-cta{
+	    position: absolute;
+	    right: 10px;
+	    top: 0;
+	}
+
+	.wrap-caption{
+		width: 100%;
+	}
+
+	.box-team{
+		.box-image, .body-content{
+			width: 100%;	
+		}
+	}
+
+	.btn-sidebar{
+		&.btn, &.btn-primary, &.btn-secondary{
+		    padding: 15px 25px;
+		}
+	}
+	.section-heading {
+	    font-size: 30px;
+	    line-height: auto;
+	}
+	.footer .footer-item .footer-title {
+	    font-size: 20px;
+	}
+	.list-news {
+	    width: initial;
+	}
+
+}
+
+@media (max-width: 479px) {
+	h2, .banner-page .title-page {	
+	    font-size: 2em;
+	}
+	.box-partner .item .box-image {
+	    clear: left;
+	    display: block;
+	    width: inherit;
+	}
+	.box-partner .item .box-info {
+	    width: inherit;
+	    margin-left: 0;
+	}
+
+	.nav > li > a {
+	    padding: 10px 15px;
+	}
+	.career-tabs .nav-tabs > li {
+	   width: 100%;
+	   clear: left;
+	}
+}

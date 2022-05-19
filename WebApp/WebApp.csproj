@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\css\style.css" />
+    <Content Remove="wwwroot\css\vendor\animate.css" />
+    <Content Remove="wwwroot\css\vendor\bootstrap.min.css" />
+    <Content Remove="wwwroot\css\vendor\font-awesome.min.css" />
+    <Content Remove="wwwroot\css\vendor\magnific-popup.css" />
+    <Content Remove="wwwroot\css\vendor\owl.carousel.min.css" />
+    <Content Remove="wwwroot\css\vendor\owl.theme.default.min.css" />
+    <Content Remove="wwwroot\css\vendor\reset.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\style.css" />
+    <None Include="wwwroot\css\vendor\animate.css" />
+    <None Include="wwwroot\css\vendor\bootstrap.min.css" />
+    <None Include="wwwroot\css\vendor\font-awesome.min.css" />
+    <None Include="wwwroot\css\vendor\magnific-popup.css" />
+    <None Include="wwwroot\css\vendor\owl.carousel.min.css" />
+    <None Include="wwwroot\css\vendor\owl.theme.default.min.css" />
+    <None Include="wwwroot\css\vendor\reset.css" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.eot" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.ttf" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.woff" />
+    <None Include="wwwroot\fonts\FontAwesome.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+  </ItemGroup>
+
+</Project>
