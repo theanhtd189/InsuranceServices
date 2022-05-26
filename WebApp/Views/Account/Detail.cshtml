@@ -1,0 +1,129 @@
+﻿@model WebApp.Models.Customer
+
+@{
+    ViewData["Title"] = "Account Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BANNER -->
+<div class="section banner-page services">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="title-page">Account</div>
+                <ol class="breadcrumb">
+                    <li><a href="#">Informtion</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page -->
+<div class="section contact">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-8 col-md-8" style="left:20%">
+                <div class="content">
+                    <h2 class="section-heading">
+                        <span class="fa fa-check-circle"></span>  Your information
+                    </h2>
+                    <div class="margin-bottom-30"></div>
+                    <form action="@Url.Action("Edit","Account")" method="post" class="form-contact">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="p_name" name="username" value="@Model.Username" placeholder="Full Name..." required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" id="p_email" name="email" value="@Model.Email" placeholder="Email..." required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="p_phone" name="phone" value="@Model.Phone" placeholder="Phone Number..." required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="p_address" name="address" value="@Model.Address" placeholder="Your Address..." required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="date" class="form-control" id="p_age" name="birthday" value="@Model.Birthday.Value.ToString("yyyy-MM-dd")" placeholder="Your birthday..." required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <select id="p_gender" name="gender" class="form-control">
+                                        @{
+                                            if (Model.Gender == true)
+                                            {
+                                                <option value="true" selected>Male</option>
+                                                <option value="false">Female</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="true">Male</option>
+                                                <option value="false" selected>Female</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label> Leave empty if you don't want to change your password!</label>
+                                    <input type="password" class="form-control" id="p1" name="password" placeholder="Your Password...">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="p2" placeholder="Repeat Password...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div id="success"></div>
+                            <button type="submit" class="btn btn-secondary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("form").submit(function(e){
+            e.preventDefault();
+            var p1 = $("#p1").val()
+            var p2 = $("#p2").val()
+            if(!p1 && !p2){
+                $(this).unbind('submit');
+                        e.currentTarget.submit();
+                        return true;
+            }
+            else
+            {
+                if(p1!=p2){
+                    alert("Your password is not match!");
+                    return false;
+                }
+                else{
+                    $(this).unbind('submit');
+                        e.currentTarget.submit();
+                        return true;
+                }
+            }
+        })
+
+    })
+</script>

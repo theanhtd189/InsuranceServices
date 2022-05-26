@@ -1,0 +1,82 @@
+﻿@using WebApp.Models;
+@using X.PagedList;
+@model IPagedList<News>
+@{
+    ViewBag.Title = "News";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+	<!-- BANNER -->
+	<div class="section banner-page news">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-12">
+					<div class="title-page">NEWS</div>
+					<ol class="breadcrumb">
+						<li><a href="~/News">News</a></li>
+						<li class="active">News Feed</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- SINGLE PAGE --> 
+	<div class="section news section-border">
+		<div class="container">
+			<div class="row grid-services">
+				
+				
+				@if(Model!=null)
+				foreach(var item in Model){
+					<div class="col-sm-6 col-md-4">
+					<div class="box-news-1">
+						<div class="image">
+							<a href="@Url.Action("Detail","News", new {id=item.Id})" title="@item.Title">
+								<img src="@item.Image" alt="" class="img-responsive">
+							</a>
+						</div>
+							<div class="meta-date">March 20, 2016</div>
+							<h3 class="blok-title"><a href="#" title="How to protect your kid for their future dream.">How to protect your kid for their future dream.</a></h3>
+						</div>
+					</div>
+				}
+
+			</div>
+
+			<div class="row">
+            <div class="col-sm-12 col-md-12">
+                <ul class="pagination">
+                    @{
+                        var list = ViewBag.TotalPage;
+                        if(list!=null)
+                        {
+                            var c = ViewBag.Page;
+                            for(int i = 1; i <= list; i++)
+                            {
+                              <li class="@((i==c)?"active":"")">
+                              <a href="@Url.Action("","Contracts", new {page=i})">@i</a></li>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+
+		</div>
+	</div>
+
+	<!-- CTA -->
+	<div class="section cta">
+		<div class="container">		
+			<div class="row">				
+				<div class="col-sm-12 col-md-7 col-md-offset-1">
+					<h3 class="cta-desc">Get An Insurance Right Now & Save up to 10%</h3>
+				</div>
+				<div class="col-sm-12 col-md-3">
+					<a href="~/Contact" title="" class="btn btn-orange-cta pull-right btn-view-all">GET A QUOTE</a>
+				</div>
+
+			</div>
+		</div>
+	</div>

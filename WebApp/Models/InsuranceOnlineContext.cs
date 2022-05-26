@@ -22,10 +22,9 @@ namespace WebApp.Models
         public virtual DbSet<Customer> Customers { get; set; } = null!;
         public virtual DbSet<Faq> Faqs { get; set; } = null!;
         public virtual DbSet<Feedback> Feedbacks { get; set; } = null!;
-        public virtual DbSet<InsuarancePolicy> InsuarancePolicies { get; set; } = null!;
         public virtual DbSet<Insurance> Insurances { get; set; } = null!;
-        public virtual DbSet<InsurancePoly> InsurancePolies { get; set; } = null!;
         public virtual DbSet<Loan> Loans { get; set; } = null!;
+        public virtual DbSet<News> News { get; set; } = null!;
         public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<PaymentDetail> PaymentDetails { get; set; } = null!;
         public virtual DbSet<PeriodicPaymentMethod> PeriodicPaymentMethods { get; set; } = null!;
@@ -36,17 +35,9 @@ namespace WebApp.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                IConfigurationRoot configuration = new ConfigurationBuilder()
-                   .SetBasePath(Directory.GetCurrentDirectory())
-                   .AddJsonFile("appsettings.json")
-                   .Build();
-                var connectionString = configuration.GetConnectionString("Context");
-                optionsBuilder.UseSqlServer(connectionString);
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=TA1O9ER\\SQLEXPRESS;Initial Catalog=InsuranceOnline;Integrated Security=True;");
             }
-        }
-        protected void OnConfiguring(DbContextOptionsBuilder optionsBuilder,string _c)
-        {
-            optionsBuilder.UseSqlServer(_c);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -72,9 +63,8 @@ namespace WebApp.Models
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("Created_at");
-
-                entity.Property(e => e.Description).HasMaxLength(255);
+                    .HasColumnName("Created_at")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
@@ -89,9 +79,12 @@ namespace WebApp.Models
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("Created_at");
+                    .HasColumnName("Created_at")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
+
+                entity.Property(e => e.Duration).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.ExpriredAt)
                     .HasColumnType("datetime")
@@ -104,11 +97,13 @@ namespace WebApp.Models
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Contracts)
                     .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Contracts_Customers");
 
                 entity.HasOne(d => d.Insurance)
                     .WithMany(p => p.Contracts)
                     .HasForeignKey(d => d.InsuranceId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Contracts_Insurances");
             });
 
@@ -122,7 +117,8 @@ namespace WebApp.Models
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("Created_at");
+                    .HasColumnName("Created_at")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Email).HasMaxLength(255);
 
@@ -131,6 +127,8 @@ namespace WebApp.Models
                 entity.Property(e => e.Phone)
                     .HasMaxLength(12)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Status).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
@@ -147,9 +145,8 @@ namespace WebApp.Models
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("Created_at");
-
-                entity.Property(e => e.Question).HasMaxLength(255);
+                    .HasColumnName("Created_at")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
@@ -160,57 +157,46 @@ namespace WebApp.Models
             {
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("Created_at");
+                    .HasColumnName("Created_at")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.FeedbackContent).HasMaxLength(255);
 
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("Updated_at");
-            });
 
-            modelBuilder.Entity<InsuarancePolicy>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.Feedbacks)
+                    .HasForeignKey(d => d.CustomerId)
+                    .HasConstraintName("FK_Feedbacks_Customers");
 
-                entity.Property(e => e.CreatedAt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("Created_at");
-
-                entity.Property(e => e.InsuarenceId).HasColumnName("InsuarenceID");
-
-                entity.Property(e => e.PolicyId).HasColumnName("PolicyID");
-
-                entity.HasOne(d => d.Insuarence)
-                    .WithMany(p => p.InsuarancePolicies)
-                    .HasForeignKey(d => d.InsuarenceId)
-                    .HasConstraintName("FK_InsuarancePolicies_Insurances");
-
-                entity.HasOne(d => d.Policy)
-                    .WithMany(p => p.InsuarancePolicies)
-                    .HasForeignKey(d => d.PolicyId)
-                    .HasConstraintName("FK_InsuarancePolicies_Policies");
+                entity.HasOne(d => d.Insurance)
+                    .WithMany(p => p.Feedbacks)
+                    .HasForeignKey(d => d.InsuranceId)
+                    .HasConstraintName("FK_Feedbacks_Insurances");
             });
 
             modelBuilder.Entity<Insurance>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.Amount)
+                    .HasColumnType("money")
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
+
+                entity.Property(e => e.Claim)
+                    .HasColumnType("money")
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("Created_at");
-
-                entity.Property(e => e.Description).HasMaxLength(255);
-
-                entity.Property(e => e.InsuredObject).HasMaxLength(50);
+                    .HasColumnName("Created_at")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Name).HasMaxLength(255);
-
-                entity.Property(e => e.SumInsured).HasColumnType("money");
-
-                entity.Property(e => e.TotalFee).HasColumnType("money");
 
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
@@ -219,30 +205,8 @@ namespace WebApp.Models
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Insurances)
                     .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Insurances_Categories");
-            });
-
-            modelBuilder.Entity<InsurancePoly>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.CreatedAt)
-                    .HasColumnType("date")
-                    .HasColumnName("Created_at");
-
-                entity.Property(e => e.InsuranceId).HasColumnName("InsuranceID");
-
-                entity.Property(e => e.PolicyId).HasColumnName("PolicyID");
-
-                entity.HasOne(d => d.Insurance)
-                    .WithMany(p => p.InsurancePolies)
-                    .HasForeignKey(d => d.InsuranceId)
-                    .HasConstraintName("FK_InsurancePolies_Insurances");
-
-                entity.HasOne(d => d.Policy)
-                    .WithMany(p => p.InsurancePolies)
-                    .HasForeignKey(d => d.PolicyId)
-                    .HasConstraintName("FK_InsurancePolies_Policies");
             });
 
             modelBuilder.Entity<Loan>(entity =>
@@ -253,7 +217,8 @@ namespace WebApp.Models
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("Created_at");
+                    .HasColumnName("Created_at")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.ExpiredAt)
                     .HasColumnType("datetime")
@@ -263,6 +228,20 @@ namespace WebApp.Models
                     .WithMany(p => p.Loans)
                     .HasForeignKey(d => d.CustomerId)
                     .HasConstraintName("FK_Loans_Customers");
+            });
+
+            modelBuilder.Entity<News>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Author).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Created_at")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Title).HasMaxLength(500);
             });
 
             modelBuilder.Entity<Payment>(entity =>
@@ -283,23 +262,20 @@ namespace WebApp.Models
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.AmountOfChange).HasColumnType("money");
-
                 entity.Property(e => e.ContentDetails)
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("Created_at");
+                    .HasColumnName("Created_at")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.PaidAmount).HasColumnType("money");
 
                 entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
 
                 entity.Property(e => e.PeriodicId).HasColumnName("PeriodicID");
-
-                entity.Property(e => e.Total).HasColumnType("money");
 
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
@@ -308,11 +284,13 @@ namespace WebApp.Models
                 entity.HasOne(d => d.Payment)
                     .WithMany(p => p.PaymentDetails)
                     .HasForeignKey(d => d.PaymentId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PaymentDetails_Payments");
 
                 entity.HasOne(d => d.Periodic)
                     .WithMany(p => p.PaymentDetails)
                     .HasForeignKey(d => d.PeriodicId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PaymentDetails_PeriodicPaymentMethods");
             });
 
@@ -329,28 +307,31 @@ namespace WebApp.Models
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("Created_at");
-
-                entity.Property(e => e.Description).HasMaxLength(255);
+                    .HasColumnName("Created_at")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Name).HasMaxLength(255);
 
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("Updated_at");
+
+                entity.HasOne(d => d.Insurance)
+                    .WithMany(p => p.Policies)
+                    .HasForeignKey(d => d.InsuranceId)
+                    .HasConstraintName("FK_Policies_Insurances");
             });
 
             modelBuilder.Entity<Reply>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Answer)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                entity.Property(e => e.Answer).IsUnicode(false);
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("Created_at");
+                    .HasColumnName("Created_at")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.FaqsId).HasColumnName("FAQsID");
 
@@ -361,7 +342,8 @@ namespace WebApp.Models
                 entity.HasOne(d => d.Faqs)
                     .WithMany(p => p.Replies)
                     .HasForeignKey(d => d.FaqsId)
-                    .HasConstraintName("FK_Replies_FAQs");
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_Replies_FAQs1");
             });
 
             OnModelCreatingPartial(modelBuilder);

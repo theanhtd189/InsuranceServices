@@ -1,0 +1,73 @@
+﻿@model WebApp.Models.News
+
+@{
+    ViewBag.Tittle = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+	var _about = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.";
+}
+
+	<!-- BANNER -->
+	<div class="section banner-page news">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-12">
+					<div class="title-page">Single News</div>
+					<ol class="breadcrumb">
+						<li><a href="#">Detail</a></li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Page -->
+	<div class="section news section-border">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 col-md-4 col-md-push-8">
+					<div class="widget text">
+						<div class="widget-title">
+							About Company
+						</div>
+						<p>@_about</p>
+					</div>
+					
+					<partial name="~/Views/Shared/_contact.cshtml" />
+
+				</div>
+				<div class="col-sm-8 col-md-8 col-md-pull-4">
+					<div class="single-news">
+						<div class="image">
+							<div class="meta-date">@Model.CreatedAt.Value.ToString("dd")
+								<span>@Model.CreatedAt.Value.ToString("MMM")</span></div>
+							<img src="@Model.Image" alt="" class="img-responsive"> 
+						</div>
+						<div class="margin-bottom-30"></div>
+						<h2 class="section-heading">
+							@Model.Title
+						</h2>
+						<div class="meta-author">Posted by @Model.Author</div>
+						<div class="margin-bottom-30"></div>
+						<p>@(System.Web.HttpUtility.HtmlDecode(Model.Content))</p>
+					 </div>
+				</div>
+			</div>		
+		</div>
+	</div> 
+	
+	<!-- CTA -->
+	<div class="section cta">
+		<div class="container">
+			
+			<div class="row">
+				
+				<div class="col-sm-12 col-md-7 col-md-offset-1">
+					<h3 class="cta-desc">Get An Insurance Right Now & Save up to 10%</h3>
+				</div>
+				<div class="col-sm-12 col-md-3">
+					<a href="~/Contact" title="" class="btn btn-orange-cta pull-right btn-view-all">GET A QUOTE</a>
+				</div>
+
+			</div>
+		</div>
+	</div>

@@ -1,9 +1,23 @@
-﻿@{ 
+﻿@using WebApp.Models;
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+
+@{
     var _title = "Insure - Insurance Company";
+    var _address = "Ho Chi Minh City - Viet Nam";
+    var _phone = " (+84) 123 456 789";
+    var _time_work = "Mon - Sat | 08:00 - 17:00";
+    var _closed_time = "Sunday Closed";
+    var _contact_email = "vninsuarancesupport@isv.com.vn";
+    var _street = "District 7";
+    var _welcome_text = "Welcome to insurance company, we're here to help you";
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString();
+    var db = new InsuranceOnlineContext();
     if (ViewBag.Title != null)
     {
         _title = ViewBag.Title;
     }
+    var list_services = db.Categories.ToList();
 }
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -38,17 +52,17 @@
                 <div class="col-sm-12 col-md-6">
                     <div class="topbar-left">
                         <div class="welcome-text">
-                            Welcome to insurance company, we're here to help you
+                            @_welcome_text
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <div class="topbar-right">
-                        <ul class="topbar-menu">
+                        @*                        <ul class="topbar-menu">
                             <li><a href="~/find-an-agents.html" title="Find An Agents">Find An Agents</a></li>
                             <li><a href="~/faq.html" title="FAQ">FAQ's</a></li>
                             <li><a href="~/careers.html" title="Careers">Careers</a></li>
-                        </ul>
+                            </ul>*@
                         <ul class="topbar-sosmed">
                             <li>
                                 <a href="~/#"><i class="fa fa-facebook"></i></a>
@@ -86,8 +100,8 @@
                         <div class="fa fa-phone"></div>
                     </div>
                     <div class="body-content">
-                        <div class="heading">(0761)654-123987</div>
-                        info@yoursite.com
+                        <div class="heading">@_phone</div>
+                        @_contact_email
                     </div>
                 </div>
                 <!-- INFO 2 -->
@@ -96,8 +110,8 @@
                         <div class="fa fa-clock-o"></div>
                     </div>
                     <div class="body-content">
-                        <div class="heading">Mon - Sat 09:00 - 17:00</div>
-                        Sunday Closed
+                        <div class="heading">@_time_work</div>
+                        @_closed_time
                     </div>
                 </div>
                 <!-- INFO 3 -->
@@ -106,8 +120,8 @@
                         <div class="fa fa-map-marker"></div>
                     </div>
                     <div class="body-content">
-                        <div class="heading">99 S.t Jomblo Park</div>
-                        Pekanbaru 28292. ID
+                        <div class="heading">@_address</div>
+                        @_street
                     </div>
                 </div>
 
@@ -127,7 +141,6 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-
             </div>
             <nav class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-left">
@@ -141,44 +154,69 @@
                             <li><a href="@Url.Action("","Our-Team")">OUR TEAM</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="~/#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SERVICES <span class="caret"></span></a>
+                    <li class="dropdown" @(controllerName.ToLower()=="services"?"class='active''":"")>
+                        <a href="@Url.Action("","Services")" class="dropdown-toggle" role="button">
+                            SERVICES
+                        </a>
+                    </li>
+                    <li class="dropdown" @(controllerName.ToLower()=="faqs"?"class='active''":"")>
+                        <a href="@Url.Action("","Faqs")" class="dropdown-toggle" role="button">
+                            FAQS
+                        </a>
+                    <li class="dropdown" @(controllerName.ToLower()=="policies"?"class='active''":"")>
+                        <a href="@Url.Action("","Policies")" class="dropdown-toggle" role="button">
+                            POLICIES
+                        </a>
+                    </li>
+                    <li class="dropdown" @(controllerName.ToLower()=="news"?"class='active''":"")>
+                        <a href="@Url.Action("","News")" class="dropdown-toggle" role="button">
+                            NEWS
+                        </a>
+                    </li>
+                    <li class="dropdown" @(controllerName.ToLower()=="contact"?"class='active''":"")>
+                        <a href="@Url.Action("","Contact")" class="dropdown-toggle" role="button">
+                            CONTACT
+                        </a>
+                    </li>
+                    <li class="dropdown" @((controllerName.ToLower()=="account"||controllerName.ToLower()=="login")?"class='active''":"")>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ACCOUNT <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="@Url.Action("","Services")">SERVICES</a></li>
-                            <li><a href="@Url.Action("Detail","Services")">SERVICES DETAIL</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="@Url.Action("","Faqs")" class="dropdown-toggle" role="button" >FAQS 
-                        </a>
-
-                    <li class="dropdown">
-                        <a href="@Url.Action("","Policies")" class="dropdown-toggle" role="button">POLICIES 
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="@Url.Action("","Contact")" class="dropdown-toggle" role="button">CONTACT 
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="~/#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ACCOUNT <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="@Url.Action("","Login")">LOGIN</a></li>
-                            <li><a href="@Url.Action("","Login")">SIGN UP</a></li>
+                                @{
+                                    var a = Context.Session.GetInt32("user_id");
+                                    if (a != null)
+                                    {
+                                        <li><a href="@Url.Action("","Account")">Acount Infomation</a></li>
+                                         <li><a href="@Url.Action("","Contracts")">Your Contracts</a></li>
+                                        <li><a href="@Url.Action("","Logout")">LOGOUT</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="@Url.Action("","Login")">LOGIN / SIGNUP</a></li>
+                                    }
+                                }
                         </ul>
                     </li>
                 </ul>
             </nav>
 
             <div class="form-search">
-                <form>
-                    <input type="text" placeholder="Search">
-                    <button type="button" class="btn">Login</button>
+                <form action="@Url.Action("","")">
+                    <input type="text" placeholder="Search" name="search_input">
+                    <button type="button" class="btn">Search</button>
                 </form>
             </div>
 
         </div>
     </div>
+    @if (ViewBag.Msg != null)
+    {
+        <div class="alert alert-warning alert-dismissible show msg" role="alert">
+            <strong>@ViewBag.Msg</strong> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
 
     @RenderBody()
 
@@ -191,7 +229,6 @@
                 <div class="col-sm-3 col-md-3">
                     <div class="footer-item">
                         <img src="~/images/logo-bottom.png" alt="logo bottom">
-                        <p>This template is a micro niche for business categories, namely Insure - Insurance Company HTML Template. there was an excess of this template is using HTML/CSS.</p>
                         <div class="footer-sosmed">
                             <a href="~/#" title="">
                                 <div class="item">
@@ -226,25 +263,25 @@
                                 <div class="info-icon">
                                     <span class="fa fa-map-marker"></span>
                                 </div>
-                                <div class="info-text">99 S.t Jomblo Park Pekanbaru 28292. Indonesia</div>
+                                <div class="info-text">@_address</div>
                             </li>
                             <li>
                                 <div class="info-icon">
                                     <span class="fa fa-phone"></span>
                                 </div>
-                                <div class="info-text">(0761) 654-123987</div>
+                                <div class="info-text">@_phone</div>
                             </li>
                             <li>
                                 <div class="info-icon">
                                     <span class="fa fa-envelope"></span>
                                 </div>
-                                <div class="info-text">info@yoursite.com</div>
+                                <div class="info-text">@_contact_email</div>
                             </li>
                             <li>
                                 <div class="info-icon">
                                     <span class="fa fa-clock-o"></span>
                                 </div>
-                                <div class="info-text">Mon - Sat 09:00 - 17:00</div>
+                                <div class="info-text">@_time_work</div>
                             </li>
                         </ul>
                     </div>
@@ -255,12 +292,16 @@
                             Our Services
                         </div>
                         <ul class="list">
-                            <li><a href="~/service-life-insurance.html" title="">Life Insurance</a></li>
-                            <li><a href="~/service-car-insurance.html" title="">Car Insurance</a></li>
-                            <li><a href="~/service-travel-insurance" title="">Travel Insurance</a></li>
-                            <li><a href="~/service-house-insurance.html" title="">House Insurance</a></li>
-                            <li><a href="~/service-vehicle-insurance.html" title="">Vehicle Insurance</a></li>
-                            <li><a href="~/service-boat-insurance.html" title="">Boat Insurance</a></li>
+                            @{
+                                if (list_services != null && list_services.Count > 0)
+                                {
+                                    foreach (var item in list_services.Take(4))
+                                    {
+                                        <li><a href="@Url.Action("","Services", new { id=item.CategoryId})" title="">@item.CategoryName</a></li>
+                                    }
+                                }
+
+                            }
                         </ul>
                     </div>
                 </div>
@@ -270,11 +311,10 @@
                             Additional Links
                         </div>
                         <ul class="list">
-                            <li><a href="~/our-company.html" title="">Our Company</a></li>
-                            <li><a href="~/our-team.html" title="">Our Team</a></li>
-                            <li><a href="~/our-partners.html" title="">Our Partners</a></li>
-                            <li><a href="~/careers.html" title="">Careers</a></li>
-                            <li><a href="~/contact-us.html" title="">Contact Us</a></li>
+                            <li><a href="@Url.Action("","Login")" title="">Login / Logout</a></li>
+                            <li><a href="@Url.Action("","Our-Company")" title="">Our Company</a></li>
+                            <li><a href="@Url.Action("","Our-Team")" title="">Our Team</a></li>
+                            <li><a href="@Url.Action("","Contact")" title="">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
@@ -301,7 +341,6 @@
     <script type="text/javascript" src="~/js/vendor/jquery.magnific-popup.min.js"></script>
     <script type="text/javascript" src="~/js/vendor/validator.min.js"></script>
     <script type="text/javascript" src="~/js/vendor/form-scripts.js"></script>
-    <script type='text/javascript' src='https://maps.google.com/maps/api/js?sensor=false&#038;ver=4.1.5'></script>
     <script type="text/javascript" src="~/js/script.js"></script>
 </body>
 </html>

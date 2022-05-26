@@ -1,0 +1,180 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BANNER -->
+<div class="section banner-page services">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="title-page">Let me know who you are?</div>
+                <ol class="breadcrumb">
+                    <li><a href="#">Sign In Method</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page -->
+<div class="section contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-md-4 col-md-push-8">
+                <div class="widget download">
+                    <a href="#" class="btn btn-secondary btn-block btn-sidebar"><span class="fa  fa-file-pdf-o"></span> Company Brochure</a>
+                </div>
+
+                <partial name="~/Views/Shared/_contact.cshtml" />
+
+            </div>
+            <div class="col-sm-8 col-md-8 col-md-pull-4">
+                <div class="content">
+
+                    @{
+                        string _msg = "Login with our system to access all of services";
+                        if (ViewBag.Error != null)
+                        {
+                            _msg = ViewBag.Error;
+                        }
+                    }
+
+                    <p style="color:red;font-size:2rem;">@_msg</p>
+                    <h2 class="section-heading">
+                        <span class="fa fa-check-circle"></span>  Login
+                    </h2>
+                    <div class="margin-bottom-30"></div>
+                    <h3 class="section-heading-2">
+                        Your infomation
+                    </h3>
+                    <form action="~/LogIn" method="post" class="form-contact">
+                        @{
+                            if (ViewBag.Callback != null)
+                            {
+                                <input type="hidden" name="callback" value="@ViewBag.Callback" />
+                            }
+                        }
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="Your email..." required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Your Password..." required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div id="success"></div>
+                            <button type="submit" class="btn btn-secondary">LOGIN</button>
+                        </div>
+                    </form>
+
+
+                    <div class="margin-bottom-50"></div>
+                    <p><em>If you don't have a account, create one !</em></p>
+                    <h2 class="section-heading">
+                        <span class="fa fa-plus-circle"></span>  Sign Up
+                    </h2>
+                    <div class="margin-bottom-30"></div>
+                    <h3 class="section-heading-2">
+                        Contact Details
+                    </h3>
+                    <p style="color:red;font-size:2rem;" id="msg"></p>
+                    <form action="~/SignUp" method="post" class="form-contact" id="signup">
+                        @{
+                            if (ViewBag.Callback != null)
+                            {
+                                <input type="hidden" name="callback" value="@ViewBag.Callback" />
+                            }
+                        }
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="p_name" name="fullname" placeholder="Full Name..." required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="p_address" name="address" placeholder="Your Address..." required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="p_phone" name="phone" placeholder="Phone Number..." required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="p_email" name="email" placeholder="Email..." required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="date" class="form-control" id="p_age" name="birthday" placeholder="Your Age..." required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <select name="p_gender" id="p_gender" class="form-control">
+                                        <option value="true" selected>Male</option>
+                                        <option value="false">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="p1" name="password" placeholder="Your Password..." required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="p2" placeholder="Repeat Password..." required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div id="success"></div>
+                            <button type="submit" class="btn btn-secondary">CREATE NOW</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#signup").submit(function(e){
+             e.preventDefault();
+            if($("#p1").val()!=$("#p2").val()){
+                alert("Your password is not match!");
+            }
+            else
+            {
+                $.ajax({
+                    method:'POST',
+                    url: '@Url.Action("","SignUp")',
+                    data: $(this).serialize(),
+                    success: function(response){
+                        console.log(response)
+                        if(response.stt_code==200 && response.id>0){
+                            window.location.href = "@Url.Action("","Account")";
+                        }else
+                        {
+                            $("#msg").text(response.message)
+                        }
+                    },
+                    error: function(e){
+                        alert("Error when connect to server!");
+                    }
+                })
+                }
+        })
+    })
+</script>

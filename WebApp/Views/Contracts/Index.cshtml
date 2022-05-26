@@ -1,0 +1,118 @@
+﻿@using WebApp.Models;
+@using X.PagedList;
+
+@{
+    ViewBag.Title = "Your contracts list";
+    var list_contract = (IPagedList<Contract>)ViewBag.List_Contract;
+}
+
+<!-- BANNER -->
+<div class="section banner-page about">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="title-page">Account</div>
+                <ol class="breadcrumb">
+                    <li><a href="#">Contract List</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Team -->
+<div class="section about section-border">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <h2 class="section-heading">
+                    Signed Contract
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+
+            @{
+                if (list_contract != null && list_contract.Count > 0)
+                {
+                    foreach (var item in list_contract)
+                    {
+                        var _stt = "Canceled";
+                        if (item.Status == true)
+                        {
+                            _stt = "Completed";
+                        }
+                        if (item.Status == false)
+                        {
+                            _stt = "Maintaining";
+                        }
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="box-team">
+                                <div class="box-image">
+                                    <img src="@item.Insurance.Image" alt="">
+                                </div>
+                                <div class="body-content">
+                                    <div class="people">@item.Insurance.Category.CategoryName</div>
+                                    <div class="position">@item.Insurance.Name</div>
+                                    <div class="excert">Status: @_stt</div>
+                                    <div class="detail-text">
+                                        <span class="fa fa-file-text"> </span> Detail:
+                                        <a href="@Url.Action("Detail","Contracts",new {id=item.Id})"> View</a>
+                                    </div>
+                                    <div class="detail-text">
+                                        <span class="fa fa-bookmark-o"></span>
+                                        Signed Time: @item.CreatedAt.Value.ToString("d")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <h3>You didn't sign any contract</h3>
+                }
+            }
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <ul class="pagination">
+                    @{
+                        var list = ViewBag.TotalPage;
+                        if(list!=null)
+                        {
+                            var c = ViewBag.Page;
+                            for(int i = 1; i <= list; i++)
+                            {
+                              <li class="@((i==c)?"active":"")">
+                              <a href="@Url.Action("","Contracts", new {page=i})">@i</a></li>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- CTA -->
+<div class="section cta">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-sm-12 col-md-7 col-md-offset-1">
+                <h3 class="cta-desc">Get An Insurance Right Now & Save up to 10%</h3>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <a href="~/Contact" title="" class="btn btn-orange-cta pull-right btn-view-all">GET A QUOTE</a>
+            </div>
+
+        </div>
+    </div>
+</div>

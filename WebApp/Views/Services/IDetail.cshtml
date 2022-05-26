@@ -1,0 +1,86 @@
+﻿@model WebApp.Models.Insurance;
+@using System.Web;
+@using WebApp.Functions;
+@{
+    ViewBag.Title = "Service Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var db = new WebApp.Models.InsuranceOnlineContext();
+    var list = db.Insurances.Where(x => x.CategoryId == Model.CategoryId).ToList();
+    var curency = "VND";
+    var _catname = db.Categories.FirstOrDefault(x => x.CategoryId == Model.CategoryId) != null ? db.Categories.FirstOrDefault(x => x.CategoryId == Model.CategoryId).CategoryName : "Service";
+}
+
+<!-- BANNER -->
+<div class="section banner-page services">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="title-page">Services</div>
+                <ol class="breadcrumb">
+                    <li><a href="@Url.Action("","Services")">@_catname</a></li>
+                    <li class="active">@Model.Name</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page -->
+<div class="section services section-border">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-md-4 col-md-push-8">
+                <div class="widget categories">
+                    <a href="@Url.Action("Detail","Services", new {cid=Model.CategoryId})" class="btn btn-secondary btn-block btn-sidebar">
+                        <span class="fa fa-align-justify"></span> @_catname
+                    </a>
+                    <ul class="category-nav">
+                        @if (list != null)
+                        {
+                            foreach (var item in list)
+                            {
+                                if (Model.Name == item.Name)
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    <li><a href="@Url.Action("Detail","Services", new {iid=item.Id})">@item.Name</a></li>
+                                }
+                            }
+                        }
+                    </ul>
+                </div>
+
+                <partial name="~/Views/Shared/_contact.cshtml" />
+
+
+            </div>
+            <div class="col-sm-8 col-md-8 col-md-pull-4">
+                <div class="single-page">
+                    <img src="@Model.Image" alt="" class="img-responsive">
+                    <div class="margin-bottom-30"></div>
+                    <h2 class="section-heading">
+                        @(Model.Name)
+                    </h2>
+                    <div class="service-contents">
+                        @HttpUtility.UrlDecode(Model.Description)
+                    </div>
+                    <div class="margin-bottom-50"></div>
+                    <h2 class="section-heading">
+                        More Information
+                    </h2>
+                    <ul class="checklist">
+                        <li>Service's Fee Amount: <span class="fee-amount">@FormatNumber.Split(Math.Ceiling((decimal)Model.Amount)) @curency / year</span></li>
+                        <li>The cost of claims: <span>@Math.Ceiling((decimal)Model.Claim) @curency</span></li>
+                    </ul>
+                    <div class="col-sm-12 col-md-3">
+                        <a href="@Url.Action("GetService","Purchase", new { id=Model.Id })" class="btn btn-outline-primary"><span class="fa fa-check"></span>  GET THIS SERVICE</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

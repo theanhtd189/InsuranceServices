@@ -564,12 +564,13 @@ ul.checklist {
     list-style: none;
     margin: 10px 0 25px 35px; }
     ul.checklist li:before {
-      font-family: FontAwesome;
-      content: "\f00c";
-      font-size: 20px;
-      color: #12aaeb;
-      margin-left: -35px;
-      margin-right: 15px; }
+        font-family: FontAwesome;
+        content: "\f05a";
+        font-size: 20px;
+        color: #12aaeb;
+        margin-left: -35px;
+        margin-right: 15px;
+    }
 
 .grid-services {
   margin-top: 30px;
@@ -592,13 +593,14 @@ ul.checklist {
   margin-bottom: 70px; }
 
 .banner-page {
-  height: 250px;
-  display: block;
-  background-color: #000;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover; }
+    height: 250px;
+    display: block;
+    background-color: #123c4a;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
   .banner-page .title-page {
     text-align: center;
     color: #ffffff;
@@ -1051,7 +1053,7 @@ ul.checklist {
   .box-history .item:before {
     content: '';
     position: absolute;
-    left: 92px;
+    left: 142px;
     top: 0;
     bottom: 0;
     width: 1px;
@@ -1063,7 +1065,7 @@ ul.checklist {
     font-weight: 700; }
   .box-history .item .year-info {
     position: relative;
-    margin-left: 100px; }
+    margin-left: 150px; }
     .box-history .item .year-info:before {
       content: '';
       position: absolute;
@@ -1627,9 +1629,9 @@ ul.checklist {
  * -----------------------------------------------------------------------------
  */
 /* 6.1 - About */
-.banner-page.about {
+/*.banner-page.about {
   background: url("../images/slide2-2.jpg") bottom center no-repeat; }
-
+*/
 dl.hiw {
   width: 100%; }
   dl.hiw dt {
@@ -1671,24 +1673,24 @@ dl.hiw {
       background-color: #f6ba18; }
 
 /* 6.2 - Services */
-.banner-page.services {
-  background: url("../images/slide2-2.jpg") bottom center no-repeat; }
+/*.banner-page.services {
+  background: url("../images/slide2-2.jpg") bottom center no-repeat; }*/
 
 .title-agent {
   color: #043140;
   font-size: 26px; }
 
 /* 6.3 - Pages */
-.banner-page.pages {
-  background: url("../images/slide2-2.jpg") bottom center no-repeat; }
+/*.banner-page.pages {
+  background: url("../images/slide2-2.jpg") bottom center no-repeat; }*/
 
 /* 6.3 - Projects */
-.banner-page.project {
-  background: url("../images/slide2-2.jpg") bottom center no-repeat; }
+/*.banner-page.project {
+  background: url("../images/slide2-2.jpg") bottom center no-repeat; }*/
 
 /* 6.4 - News */
-.banner-page.news {
-  background: url("../images/slide2-2.jpg") bottom center no-repeat; }
+/*.banner-page.news {
+  background: url("../images/slide2-2.jpg") bottom center no-repeat; }*/
 
 .single-news .image {
   position: relative; }
@@ -1846,12 +1848,12 @@ dl.hiw {
   color: #12aaeb; }
 
 /* 6.12 - Pages */
-.banner-page.pages {
-  background: url("../images/slide2-2.jpg") bottom center no-repeat; }
+/*.banner-page.pages {
+  background: url("../images/slide2-2.jpg") bottom center no-repeat; }*/
 
 /* 6.12 - Contact */
-.banner-page.contact {
-  background: url("../images/slide2-2.jpg") bottom center no-repeat; }
+/*.banner-page.contact {
+  background: url("../images/slide2-2.jpg") bottom center no-repeat; }*/
 
 /**
  * 7. - FOOTER
@@ -2040,4 +2042,64 @@ dl.hiw {
   border:none;
   padding:4px 8px;
   margin-right: 5px;
+}
+/* GENERAL BUTTON STYLING */
+button,
+button::after {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.msg {
+    margin: 0 auto;
+    background: blanchedalmond;
+    color: #cd5b1f;
+    font-family: revert;
+    font-size: 1.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+.processed {
+    display: -webkit-box;
+    width: 80%;
+    line-height: 3.5rem;
+    margin: 0 auto;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.plan:nth-child(2n+1) .price {
+    background-color: #f6ba18;
+}
+.table .fa {
+    font-size: 2rem;
+    color: #475cc3;
+    font-weight: bolder;
+}
+.btn:hover {
+    background: #4b96e2;
+}
+.btn.cancel:hover{
+    background: #ee4575;
+}
+.canceled {
+    background: #ef4444 !important;
+    color: white !important;
+    cursor:not-allowed;
+}
+.completed {
+    color: white !important;
+    background: #378ade !important;
+    cursor: not-allowed;
+}
+/*.msg {
+    position: absolute;
+    top: 500px;
+    left: 50%;
+    transform: translateX(-50%);
+}*/
+.hidden {
+    display:none;
 }

@@ -1,7 +1,8 @@
 ﻿
 @{
-    ViewData["Title"] = "Our Company";
+    ViewBag.Title = "Our Company";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var video_url = "https://youtu.be/X2WH8mHJnhM";
 }
 
 <!-- BANNER -->
@@ -82,9 +83,9 @@
             <div class="col-sm-6 col-md-6">
                 <div class="vidimg">
                     <div class="play-vid">
-                        <a class="popup-youtube" href="https://www.youtube.com/watch?v=JGYuCRYFxew"><span class="fa fa-play fa-3x playvid"></span></a>
+                        <a class="popup-youtube" href="@video_url"><span class="fa fa-play fa-3x playvid"></span></a>
                     </div>
-                    <img src="images/600x400.jpg" alt="" class="img-responsive">
+                    <img src="~/images/company.jpg" alt="" class="img-responsive">
                 </div>
             </div>
 
@@ -93,7 +94,7 @@
 </div>
 
 <!-- MISSION -->
-<div class="section section-border">
+@*<div class="section section-border">
     <div class="container">
 
         <div class="row">
@@ -130,7 +131,7 @@
 
         </div>
     </div>
-</div>
+</div>*@
 
 <!-- Statistic -->
 <div class="section statistic section-border">
@@ -184,9 +185,7 @@
 <!-- CTA -->
 <div class="section cta">
     <div class="container">
-
         <div class="row">
-
             <div class="col-sm-12 col-md-7 col-md-offset-1">
                 <h3 class="cta-desc">Get An Insurance Right Now & Save up to 10%</h3>
             </div>

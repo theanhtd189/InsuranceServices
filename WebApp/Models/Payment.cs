@@ -11,7 +11,7 @@ namespace WebApp.Models
         }
 
         public int Id { get; set; }
-        public decimal? Total { get; set; }
+        public decimal Total { get; set; }
         public int? ContractId { get; set; }
 
         public virtual Contract? Contract { get; set; }

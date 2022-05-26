@@ -13,14 +13,10 @@ namespace WebApp.Controllers
     {
         private InsuranceOnlineContext db = new InsuranceOnlineContext();
 
-        public PoliciesController()
-        {
-        }
-
-        // GET: Policies
         public ActionResult Index()
         {
-            return View();
+            var list_policy = db.Policies.Include(x => x.Insurance.Category).Include(x=>x.Insurance).ToList();
+            return View(list_policy);
         }
 
         // GET: Policies/Details/5

@@ -11,8 +11,8 @@ namespace WebApp.Models
         }
 
         public int Id { get; set; }
-        public string? Name { get; set; }
-        public int? NumberOfMonth { get; set; }
+        public string Name { get; set; } = null!;
+        public int NumberOfMonth { get; set; }
 
         public virtual ICollection<PaymentDetail> PaymentDetails { get; set; }
     }

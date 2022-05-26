@@ -1,0 +1,171 @@
+﻿@using WebApp.Models;
+@using Microsoft.AspNetCore.Http;
+@model Insurance;
+@{
+	ViewBag.Title = "Get this service";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	var db = new InsuranceOnlineContext();
+	var user_id = Context.Session.GetInt32("user_id");
+	var u = db.Customers.FirstOrDefault(x=>x.Id==user_id);
+}
+
+	<div class="section banner-page services">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-12">
+					<div class="title-page">Get Service</div>
+					<ol class="breadcrumb">
+						<li><a href="#">@Model.Name</a></li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Page -->
+	<div class="section contact">  
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 col-md-4 col-md-push-8">   
+					
+					<partial name="~/Views/Shared/_contact.cshtml"/>
+
+				</div>
+
+				<div class="col-sm-8 col-md-8 col-md-pull-4">
+					<div class="content">
+						<h2 class="section-heading">
+							Contract Details
+						</h2>
+						<div class="margin-bottom-30"></div>
+						<h3 class="section-heading-2">
+							Your information
+						</h3>
+						<form action="@Url.Action("Process","Purchase")" method="post" class="form-contact">
+							<input type="hidden" value="@Model.Id" name="InsuranceID"/>
+							<input type="hidden" value="@Context.Session.GetInt32("user_id")" name="CustomerID"/>
+							<div class="row">
+								<div class="col-sm-6 col-md-6">
+									<div class="form-group">
+										<input type="text" class="form-control" id="p_name" placeholder="Full Name..." value="@u.Username" readonly>
+									</div>
+								</div>
+								<div class="col-sm-6 col-md-6">
+									<div class="form-group">
+										<input type="text" class="form-control" id="p_address" placeholder="Your Address..."  value="@u.Address" readonly>
+									</div>
+								</div>
+								<div class="col-sm-6 col-md-6">
+									<div class="form-group">
+										<input type="text" class="form-control" id="p_phone" placeholder="Phone Number..."  value="@u.Phone" readonly>
+									</div>
+								</div>
+								<div class="col-sm-6 col-md-6">
+									<div class="form-group">
+										<input type="text" class="form-control" id="p_e" placeholder="Your Email..."  value="@u.Email" readonly>
+									</div>
+								</div>
+							</div>
+							<h3 class="section-heading-2">
+								Selected Plan
+							</h3>
+							<div class="row">
+								<div class="col-sm-6 col-md-6">
+									<div class="checkbox">
+									    <label>
+									      <span class="fa fa-check-square-o"></span> @Model.Name
+									    </label>
+								  	</div>
+								</div>								
+							</div>
+							<h3 class="section-heading-2">
+								Your option
+							</h3>
+							<div class="row">
+								<div class="col-sm-6 col-md-6">
+									<div class="form-group">
+										<label class="">Registration Date</label>
+										<input type="text" class="form-control" name="Created_at" id="Created_at" readonly>
+									</div>
+								</div>	
+								<div class="col-sm-6 col-md-6">
+									<div class="form-group">
+										<label class="">Expiration date</label>
+										<input type="text" class="form-control" name="Exprired_at" id="Exprired_at" value="1" min="1" readonly>
+									</div>
+								</div>				
+								<div class="col-sm-6 col-md-6">
+									<div class="form-group">
+										<label class="">Duration of contract (Years): </label>
+										<input type="number" class="form-control" id="duration" name="duration" value="1" min="1" required>
+									</div>
+								</div>	
+							</div>
+							<h3 class="section-heading-2">
+								Costs
+							</h3>
+							<div class="row">
+								<div class="col-sm-6 col-md-6">
+									<div class="form-group">
+										<label class="">Fee per year: </label>
+										<span class="fa-chevron-circle-right"></span>
+										<input type="text" class="form-control" id="fee" value="@Math.Ceiling((decimal)Model.Amount)" readonly>
+									</div>
+								</div>	
+								<div class="col-sm-6 col-md-6">
+									<div class="form-group">
+										<label class="">Cost of the claims: </label>
+										<span class="fa-chevron-circle-right"></span>
+										<input type="text" class="form-control" id="claim" value="@Model.Claim" readonly>
+									</div>
+								</div>
+								<div class="col-sm-6 col-md-6">
+									<div class="form-group">
+										<label class="">Total Fee For <span id="y">1 Year</span></label>
+										<span class="fa-chevron-circle-right"></span>
+										<input type="text" class="form-control" id="total" name="total" value="@Math.Ceiling((decimal)Model.Amount)" readonly>
+									</div>
+								</div>	
+							</div>
+
+							<div class="form-group">
+								<div id="success"></div>
+								<button type="submit" class="btn btn-secondary" onclick="return confirm('Are you sure to confirm to sign this contract?')" >Confirm</button>
+							</div>
+						</form>
+					 </div>
+				</div>
+
+			</div>
+			
+		</div>
+	</div> 
+
+<script>
+$(document).ready(function(){
+		var today = new Date();
+		var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+		var dateTime = date+' '+time;
+
+		$("#Exprired_at").val((today.getFullYear()+1)+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds())
+		$("#Created_at").val(dateTime)
+
+		$("#duration").change(function(){
+			var vl = Number($(this).val())
+			var expired = new Date().getFullYear() + vl
+
+			$("#Exprired_at").val(expired+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds())
+
+			$("#total").val(@Math.Ceiling((decimal)Model.Amount) * vl)
+
+			if(vl==1)
+				$("#y").text(vl+' Year')
+			else
+				$("#y").text(vl+' Years')
+
+
+		})
+})	
+
+</script>

@@ -4,6 +4,7 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -16,8 +17,13 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
-            var e = db.Admins.ToList();
-            return View(e);
+            if (TempData["Msg"] != null)
+            {
+                ViewBag.Msg = TempData["Msg"];
+            }
+            ViewBag.list_feedbacks = db.Feedbacks.ToList();
+            ViewBag.list_services = db.Categories.ToList();
+            return View();
         }
 
         [Route("Our-Company")]
@@ -39,11 +45,12 @@ namespace WebApp.Controllers
             return View();
         }
 
+
         [Route("Error")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View("~/Views/Shared/Error.cshtml");
         }
     }
 }

@@ -1,6 +1,7 @@
-﻿
+﻿@using WebApp.Models
+@model List<Policy>
 @{
-    ViewBag.Title = "Policies";
+    ViewBag.Title = "Our Policies";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,8 +12,7 @@
             <div class="col-sm-12 col-md-12">
                 <div class="title-page">Policy</div>
                 <ol class="breadcrumb">
-                    <li><a href="index.html">Pages</a></li>
-                    <li class="active">Policy</li>
+                    <li><a href="#">Our policies</a></li>
                 </ol>
             </div>
         </div>
@@ -36,7 +36,7 @@
 
             </div>
             <div class="col-sm-5 col-md-5">
-                <img src="images/600x400.jpg" alt="" class="img-responsive">
+                <img src="~/images/policy.jpg" alt="" class="img-responsive">
             </div>
 
         </div>
@@ -49,125 +49,61 @@
         <div class="row">
             <div class="col-sm-12 col-md-12">
                 <h2 class="section-heading">
-                    Terms & Conditions for Use of this Site
+                    Insurance Policy
                 </h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 <div class="margin-bottom-50"></div>
 
                 <div class="career-tabs" data-example-id="togglable-tabs">
                     <ul id="myTabs" class="nav nav-tabs" role="tablist">
-                        <li class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">Tab1</a></li>
-                        <li class=""><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Tab2</a></li>
-                        <li class=""><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">Tab3</a></li>
-                        <li class=""><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">Tab4</a></li>
+
+                        @{
+                            if (Model != null)
+                            {
+                                if (Model.Count > 0)
+                                {
+                                    var i = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        <li class="@(i==1?"active":"")">
+                                            <a href="#tab@(item.Id)" aria-controls="tab@(item.Id)" role="tab" data-toggle="tab">@item.Insurance.Category.CategoryName</a>
+                                        </li>
+
+                                        i++;
+                                    }
+                                }
+                            }
+                        }
+
                     </ul>
+
                     <div id="myTabContent" class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade active in" id="tab1">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12">
-                                    <div class="body-tab">
-                                        <h4>Copyright / Trademark</h4>
-                                        <p>Lorem ipsum dolor sit amet libero turpis non cras ligula id commodo aenean est in volutpat amet sodales porttitor bibendum facilisi suspendisse aliquam ipsum ante morbi sed ipsum mollis. Sollicitudin viverra vel varius eget sit mollis.</p><p>Lorem ipsum dolor sit amet libero turpis non cras ligula id commodo aenean est in volutpat amet sodales porttitor bibendum.</p>
-                                        <div class="margin-bottom-30"></div>
-                                        <h4>Submitted Ideas Policy</h4>
-                                        <p>Lorem ipsum dolor sit amet libero turpis non cras ligula id commodo aenean est in volutpat amet sodales porttitor bibendum facilisi suspendisse aliquam ipsum ante morbi sed ipsum mollis. Sollicitudin viverra vel varius eget sit mollis.</p>
-                                        <ul>
-                                            <li>Sollicitudin viverra vel varius</li>
-                                            <li>Ligula id commodo aenean est in volutpat amet sodales</li>
-                                            <li>Lorem ipsum dolor sit amet</li>
-                                            <li>Dolor sit ametviverra vel varius</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab2">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12">
-                                    <div class="body-tab">
-                                        <h4>JOB DESCRIPTION</h4>
-                                        <p>Lorem ipsum dolor sit amet libero turpis non cras ligula id commodo aenean est in volutpat amet sodales porttitor bibendum facilisi suspendisse aliquam ipsum ante morbi sed ipsum mollis. Sollicitudin viverra vel varius eget sit mollis.</p><p>Lorem ipsum dolor sit amet libero turpis non cras ligula id commodo aenean est in volutpat amet sodales porttitor bibendum.</p>
-                                        <div class="margin-bottom-30"></div>
-                                        <h4>RECRUITMENT</h4>
-                                        <p>Lorem ipsum dolor sit amet libero turpis non cras ligula id commodo aenean est in volutpat amet sodales porttitor bibendum facilisi suspendisse aliquam ipsum ante morbi sed ipsum mollis. Sollicitudin viverra vel varius eget sit mollis.</p>
-                                        <ul>
-                                            <li>Sollicitudin viverra vel varius</li>
-                                            <li>Ligula id commodo aenean est in volutpat amet sodales</li>
-                                            <li>Lorem ipsum dolor sit amet</li>
-                                            <li>Dolor sit ametviverra vel varius</li>
-                                        </ul>
-                                        <div class="margin-bottom-30"></div>
-                                        <h4>LOCATIONS</h4>
-                                        <p>Pekanbaru, Riau, ID</p>
-                                        <div class="margin-bottom-30"></div>
-                                        <h4>DEPARTMENT</h4>
-                                        <p>Project Management</p>
-                                        <div class="margin-bottom-30"></div>
-                                        <h4>END DATE</h4>
-                                        <p>March 15, 2016</p>
-                                        <div class="margin-bottom-30"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab3">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12">
-                                    <div class="body-tab">
-                                        <h4>JOB DESCRIPTION</h4>
-                                        <p>Lorem ipsum dolor sit amet libero turpis non cras ligula id commodo aenean est in volutpat amet sodales porttitor bibendum facilisi suspendisse aliquam ipsum ante morbi sed ipsum mollis. Sollicitudin viverra vel varius eget sit mollis.</p><p>Lorem ipsum dolor sit amet libero turpis non cras ligula id commodo aenean est in volutpat amet sodales porttitor bibendum.</p>
-                                        <div class="margin-bottom-30"></div>
-                                        <h4>RECRUITMENT</h4>
-                                        <p>Lorem ipsum dolor sit amet libero turpis non cras ligula id commodo aenean est in volutpat amet sodales porttitor bibendum facilisi suspendisse aliquam ipsum ante morbi sed ipsum mollis. Sollicitudin viverra vel varius eget sit mollis.</p>
-                                        <ul>
-                                            <li>Sollicitudin viverra vel varius</li>
-                                            <li>Ligula id commodo aenean est in volutpat amet sodales</li>
-                                            <li>Lorem ipsum dolor sit amet</li>
-                                            <li>Dolor sit ametviverra vel varius</li>
-                                        </ul>
-                                        <div class="margin-bottom-30"></div>
-                                        <h4>LOCATIONS</h4>
-                                        <p>Pekanbaru, Riau, ID</p>
-                                        <div class="margin-bottom-30"></div>
-                                        <h4>DEPARTMENT</h4>
-                                        <p>Project Management</p>
-                                        <div class="margin-bottom-30"></div>
-                                        <h4>END DATE</h4>
-                                        <p>March 15, 2016</p>
-                                        <div class="margin-bottom-30"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab4">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12">
-                                    <div class="body-tab">
-                                        <h4>JOB DESCRIPTION</h4>
-                                        <p>Lorem ipsum dolor sit amet libero turpis non cras ligula id commodo aenean est in volutpat amet sodales porttitor bibendum facilisi suspendisse aliquam ipsum ante morbi sed ipsum mollis. Sollicitudin viverra vel varius eget sit mollis.</p><p>Lorem ipsum dolor sit amet libero turpis non cras ligula id commodo aenean est in volutpat amet sodales porttitor bibendum.</p>
-                                        <div class="margin-bottom-30"></div>
-                                        <h4>RECRUITMENT</h4>
-                                        <p>Lorem ipsum dolor sit amet libero turpis non cras ligula id commodo aenean est in volutpat amet sodales porttitor bibendum facilisi suspendisse aliquam ipsum ante morbi sed ipsum mollis. Sollicitudin viverra vel varius eget sit mollis.</p>
-                                        <ul>
-                                            <li>Sollicitudin viverra vel varius</li>
-                                            <li>Ligula id commodo aenean est in volutpat amet sodales</li>
-                                            <li>Lorem ipsum dolor sit amet</li>
-                                            <li>Dolor sit ametviverra vel varius</li>
-                                        </ul>
-                                        <div class="margin-bottom-30"></div>
-                                        <h4>LOCATIONS</h4>
-                                        <p>Pekanbaru, Riau, ID</p>
-                                        <div class="margin-bottom-30"></div>
-                                        <h4>DEPARTMENT</h4>
-                                        <p>Project Management</p>
-                                        <div class="margin-bottom-30"></div>
-                                        <h4>END DATE</h4>
-                                        <p>March 15, 2016</p>
-                                        <div class="margin-bottom-30"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+
+                        @{
+                            if (Model != null)
+                            {
+                                if (Model.Count > 0)
+                                {
+                                    var i = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        <div role="tabpanel" class="tab-pane fade active in" id="tab@(item.Id)">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12">
+                                                    <div class="body-tab">
+                                                        <h4>@item.Name</h4>
+                                                        <div class="margin-bottom-30"></div>
+                                                        <p>@(System.Web.HttpUtility.HtmlDecode(item.Description))</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        i++;
+                                    }
+                                }
+                            }
+                        }
 
                     </div>
                 </div>
@@ -178,37 +114,11 @@
     </div>
 </div>
 
-<!-- AGENTS -->
-<div class="section testimony">
-    <div class="container">
-
-        <div class="row">
-
-            <div class="col-sm-6 col-md-3 col-md-offset-2">
-                <div class="people">
-                    <img class="user-pic" src="images/say-img-2.jpg" alt="">
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-5 col-md-offset-1">
-
-                <div class="margin-bottom-70"></div>
-                <h2 class="title-agent">Select Your Agents Now!</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <a href="#" class="btn btn-secondary" title="OUR COMPANY">FIND AN AGENTS</a>
-                <div class="margin-bottom-50"></div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
 
 <!-- CTA -->
 <div class="section cta">
     <div class="container">
-
         <div class="row">
-
             <div class="col-sm-12 col-md-7 col-md-offset-1">
                 <h3 class="cta-desc">Get An Insurance Right Now & Save up to 10%</h3>
             </div>

@@ -1,42 +1,50 @@
-﻿@{
+﻿@using WebApp.Models;
+@using System.Web;
+@{
     ViewBag.Title = "Home Page";
+    var db = new InsuranceOnlineContext();
+    var list_services = (List<Category>)ViewBag.list_services;
+    var list_feedbacks = (List<Feedback>)ViewBag.list_feedbacks;
 }
 <!-- BANNER -->
 <div id="slides" class="section banner">
     <ul class="slides-container">
         <li>
-            <img src="~/images/1680x768.jpg" alt="">
+            <img src="~/images/slide1.jpg" alt="">
             <div class="container">
                 <div class="wrap-caption">
                     <h2 class="caption-heading">
                         Protect Your Family with Insurance
                     </h2>
                     <p class="excerpt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
-                    <a href="#" class="btn btn-primary" title="LEARN MORE">LEARN MORE</a> <a href="#" class="btn btn-secondary" title="CONTACT US">CONTACT US</a>
+                    <a href="@Url.Action("","Services")" class="btn btn-primary" title="LEARN MORE">LEARN MORE</a>
+                    <a href="@Url.Action("","Contact")" class="btn btn-secondary" title="CONTACT US">CONTACT US</a>
                 </div>
             </div>
         </li>
         <li>
-            <img src="~/images/1680x768.jpg" alt="">
+            <img src="~/images/slide2.jpg" alt="">
             <div class="container">
                 <div class="wrap-caption">
                     <h2 class="caption-heading">
                         Quality Protection &amp; Easy to Claims
                     </h2>
                     <p class="excerpt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
-                    <a href="#" class="btn btn-primary" title="LEARN MORE">LEARN MORE</a> <a href="#" class="btn btn-secondary" title="CONTACT US">CONTACT US</a>
+                    <a href="@Url.Action("","Services")" class="btn btn-primary" title="LEARN MORE">LEARN MORE</a>
+                    <a href="@Url.Action("","Contact")" class="btn btn-secondary" title="CONTACT US">CONTACT US</a>
                 </div>
             </div>
         </li>
         <li>
-            <img src="~/images/1680x768.jpg" alt="">
+            <img src="~/images/slide4.jpg" alt="">
             <div class="container">
                 <div class="wrap-caption">
                     <h2 class="caption-heading">
                         Get An Insurance for Your Travel
                     </h2>
                     <p class="excerpt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
-                    <a href="#" class="btn btn-primary" title="LEARN MORE">LEARN MORE</a> <a href="#" class="btn btn-secondary" title="CONTACT US">CONTACT US</a>
+                    <a href="@Url.Action("","Services")" class="btn btn-primary" title="LEARN MORE">LEARN MORE</a>
+                    <a href="@Url.Action("","Contact")" class="btn btn-secondary" title="CONTACT US">CONTACT US</a>
                 </div>
             </div>
         </li>
@@ -117,11 +125,11 @@
                     <li>Easy to claim, sed diam nonummy nibh euismod. Lorem ipsum dolor sit amet.</li>
                     <li>More benefit nonummy nibh euismod. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
                 </ul>
-                <a href="#" class="btn btn-primary" title="FIND AN AGENTS">FIND AN AGENTS</a>
+                <a href="@Url.Action("","Services")" class="btn btn-primary" title="FIND AN AGENTS">FIND AN AGENTS</a>
                 <div class="margin-bottom-30"></div>
             </div>
             <div class="col-sm-6 col-md-6">
-                <img src="~/images/600x400.jpg" alt="" class="img-responsive">
+                <img src="~/images/why.jpg" alt="" class="img-responsive">
             </div>
 
         </div>
@@ -139,72 +147,25 @@
             </div>
         </div>
         <div class="row grid-services">
-            <div class="col-sm-6 col-md-4">
-                <div class="box-image-1">
-                    <div class="image">
-                        <a href="services-detail.html" title="House Insurance"><img src="~/images/500x350.jpg" alt="" class="img-responsive"></a>
-                    </div>
-                    <div class="description">
-                        <h3 class="blok-title">House <br />Insurance</h3>
-                        <a href="contact-quote.html" title="GET A QUOTE" class="btn btn-secondary">GET A QUOTE</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="box-image-1">
-                    <div class="image">
-                        <a href="services-detail.html" title="House Insurance"><img src="~/images/500x350.jpg" alt="" class="img-responsive"></a>
-                    </div>
-                    <div class="description">
-                        <h3 class="blok-title">Car <br />Insurance</h3>
-                        <a href="contact-quote.html" title="GET A QUOTE" class="btn btn-secondary">GET A QUOTE</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="box-image-1">
-                    <div class="image">
-                        <a href="services-detail.html" title="House Insurance"><img src="~/images/500x350.jpg" alt="" class="img-responsive"></a>
-                    </div>
-                    <div class="description">
-                        <h3 class="blok-title">Life <br />Insurance</h3>
-                        <a href="contact-quote.html" title="GET A QUOTE" class="btn btn-secondary">GET A QUOTE</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="box-image-1">
-                    <div class="image">
-                        <a href="services-detail.html" title="House Insurance"><img src="~/images/500x350.jpg" alt="" class="img-responsive"></a>
-                    </div>
-                    <div class="description">
-                        <h3 class="blok-title">Motorcylcle <br />Insurance</h3>
-                        <a href="contact-quote.html" title="GET A QUOTE" class="btn btn-secondary">GET A QUOTE</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="box-image-1">
-                    <div class="image">
-                        <a href="services-detail.html" title="House Insurance"><img src="~/images/500x350.jpg" alt="" class="img-responsive"></a>
-                    </div>
-                    <div class="description">
-                        <h3 class="blok-title">Boat <br />Insurance</h3>
-                        <a href="contact-quote.html" title="GET A QUOTE" class="btn btn-secondary">GET A QUOTE</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="box-image-1">
-                    <div class="image">
-                        <a href="services-detail.html" title="House Insurance"><img src="~/images/500x350.jpg" alt="" class="img-responsive"></a>
-                    </div>
-                    <div class="description">
-                        <h3 class="blok-title">Travel <br />Insurance</h3>
-                        <a href="contact-quote.html" title="GET A QUOTE" class="btn btn-secondary">GET A QUOTE</a>
-                    </div>
-                </div>
-            </div>
+            @{
+                if (list_services != null && list_services.Count > 0)
+                {
+                    foreach (var item in list_services)
+                    {
+                        <div class="col-sm-6 col-md-4">
+                            <div class="box-image-1">
+                                <div class="image">
+                                    <a href="@Url.Action("Detail","Services", new {cid=item.CategoryId})" title="@item.CategoryName"><img src="@item.Image" alt="@item.CategoryName" class="img-responsive"></a>
+                                </div>
+                                <div class="description">
+                                    <h3 class="blok-title">@item.CategoryName</h3>
+                                    <a href="@Url.Action("Detail","Services", new {cid=item.CategoryId})" title="GET A QUOTE" class="btn btn-secondary">GET A QUOTE</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
 
         </div>
     </div>
@@ -216,7 +177,7 @@
         <div class="row">
 
             <div class="col-sm-6 col-md-6">
-                <img src="~/images/600x400.jpg" alt="" class="img-responsive">
+                <img src="~/images/how.jpg" alt="" class="img-responsive">
             </div>
             <div class="col-sm-6 col-md-6">
                 <h2 class="section-heading">
@@ -257,62 +218,36 @@
                 </div>
 
                 <div id="owl-testimony">
-                    <div class="item">
-                        <div class="box-testimony">
-                            <div class="quote-box">
-                                <blockquote>
-                                    We specialize in 23 different kinds of pest, and we're also qualified to handle a much wider range of pest control needs. If you have a pest problem that's not covered in our pest library.
-                                </blockquote>
-                                <p class="quote-name">
-                                    Johnathan Doel <span>CEO Buka Kreasi</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="box-testimony">
-                            <div class="quote-box">
-                                <blockquote>
-                                    We specialize in 23 different kinds of pest, and we're also qualified to handle a much wider range of pest control needs. If you have a pest problem that's not covered in our pest library.
-                                </blockquote>
-                                <p class="quote-name">
-                                    Johnathan Doel <span>CEO Buka Kreasi</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="box-testimony">
-                            <div class="quote-box">
-                                <blockquote>
-                                    We specialize in 23 different kinds of pest, and we're also qualified to handle a much wider range of pest control needs. If you have a pest problem that's not covered in our pest library.
-                                </blockquote>
-                                <p class="quote-name">
-                                    Johnathan Doel <span>CEO Buka Kreasi</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="box-testimony">
-                            <div class="quote-box">
-                                <blockquote>
-                                    We specialize in 23 different kinds of pest, and we're also qualified to handle a much wider range of pest control needs. If you have a pest problem that's not covered in our pest library.
-                                </blockquote>
-                                <p class="quote-name">
-                                    Johnathan Doel <span>CEO Buka Kreasi</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
+                    @{
+                        if (list_feedbacks != null && list_feedbacks.Count > 0)
+                        {
+                            foreach (var item in list_feedbacks)
+                            {
+                                var _s = db.Insurances.FirstOrDefault(x => x.Id == item.InsuranceId);
+                                var _c = db.Categories.FirstOrDefault(x => x.CategoryId == _s.CategoryId);
+                                var _n = db.Customers.FirstOrDefault(x => x.Id == item.CustomerId);
+                                <div class="item">
+                                    <div class="box-testimony">
+                                        <div class="quote-box">
+                                            <blockquote>
+                                                @HttpUtility.UrlDecode(item.FeedbackContent)
+                                            </blockquote>
+                                            <p class="quote-name">
+                                                @(_n!=null?_n.Username:"")
+                                                <span>Service: @(_c!=null?_c.CategoryName:"") - @(_s!=null?_s.Name:"")</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
                 </div>
-
             </div>
 
             <div class="col-sm-5 col-md-4">
                 <div class="people">
-                    <img class="user-pic" src="~/images/say-img.jpg" alt="">
+                    <img class="user-pic" src="~/images/say.jpg" alt="">
                 </div>
             </div>
         </div>
@@ -335,29 +270,27 @@
 
             <div class="col-sm-3 col-md-3">
                 <div class="client-img">
-                    <a href="#"><img src="~/images/partners.png" alt="" class="img-responsive"></a>
+                    <a href="#"><img src="~/images/partner4.png" alt="" class="img-responsive"></a>
                 </div>
             </div>
 
             <div class="col-sm-3 col-md-3">
                 <div class="client-img">
-                    <a href="#"><img src="~/images/partners.png" alt="" class="img-responsive"></a>
+                    <a href="#"><img src="~/images/partner1.png" alt="" class="img-responsive"></a>
                 </div>
             </div>
 
             <div class="col-sm-3 col-md-3">
                 <div class="client-img">
-                    <a href="#"><img src="~/images/partners.png" alt="" class="img-responsive"></a>
+                    <a href="#"><img src="~/images/partner2.png" alt="" class="img-responsive"></a>
                 </div>
             </div>
 
             <div class="col-sm-3 col-md-3">
                 <div class="client-img">
-                    <a href="#"><img src="~/images/partners.png" alt="" class="img-responsive"></a>
+                    <a href="#"><img src="~/images/partner3.png" alt="" class="img-responsive"></a>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>

@@ -15,6 +15,7 @@ namespace WebApp.Models
         public string? Description { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public string? Image { get; set; }
 
         public virtual ICollection<Insurance> Insurances { get; set; }
     }

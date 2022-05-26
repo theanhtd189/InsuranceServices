@@ -1,0 +1,28 @@
+﻿.processed {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.logo-text {
+    display: flex;
+    font-size: 1.9rem;
+    font-family: fantasy;
+    justify-content: center;
+    align-items: center;
+}
+.ta-btn {
+    padding: 10px;
+    background: #2a2b6cdb;
+    border-radius: 13px;
+    color: white;
+    transition: .5s;
+}
+    .ta-btn:hover {
+        background: #3c1f1f;
+        transition:.5s;
+        color:white;
+    }
+.main-content {
+    overflow-x:auto;
+}

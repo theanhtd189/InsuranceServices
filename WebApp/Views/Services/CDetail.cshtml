@@ -1,0 +1,204 @@
+﻿@using WebApp.Models;
+@model WebApp.Models.Category;
+@using WebApp.Functions;
+@{
+    ViewBag.Title = "List of Services";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var list_services = (List<Insurance>)ViewBag.list_services;
+    var _currency = "$";
+}
+
+<!-- BANNER -->
+<div class="section banner-page services">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="title-page">Services</div>
+                <ol class="breadcrumb">
+                    <li><a href="@Url.Action("","Services")">Services</a></li>
+                    <li class="active">@Model.CategoryName</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page -->
+@*<div class="section services section-border">
+    <div class="container">
+    <div class="row">
+    <div class="col-sm-12 col-md-12">
+    <h2 class="section-heading">
+    Desciption
+    </h2>
+    <p>@System.Web.HttpUtility.UrlDecode(Model.Description)</p>
+    </div>
+    </div>
+    <div class="row grid-item">
+
+    @if (list_services != null)
+    {
+    foreach(var item in list_services)
+    {
+    <div class="col-sm-6 col-md-4">
+    <div class="box-image-1">
+    <div class="image">
+    <a href="@Url.Action("Detail","Services",new { cid=item.CategoryId, iid=item.Id })" title="@item.Name"><img src="@item.Image" alt="@item.Name" class="img-responsive"></a>
+    </div>
+    <div class="description">
+    <h3 class="blok-title">@item.Name</h3>
+    <a href="@Url.Action("Detail","Services",new { cid=item.CategoryId, iid=item.Id })" title="@item.Name" class="btn btn-secondary">GET A QUOTE</a>
+    </div>
+    </div>
+    </div>
+    }
+    }
+    </div>
+    </div>
+    </div>*@
+
+<div class="section pricing-table section-border">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-10 col-md-10">
+                <h2 class="section-heading">
+                    Our Planning
+                </h2>
+                @if (Model.Description != null)
+                {
+                    <p>@System.Web.HttpUtility.UrlDecode(Model.Description)</p>
+                }
+                else
+                {
+                    <p>Description for this category</p>
+                }
+                <div class="margin-bottom-70"></div>
+            </div>
+
+            @*				<div class="col-sm-4 col-md-4">
+                <div class="panel panel-pricing best">
+                <header class="panel-heading">
+                <h3>SILVER PLAN</h3>
+                <div class="price">
+                <sup>$</sup>40<small>/ month</small>
+                </div>
+                </header>
+                <div class="panel-body">
+                <table class="table">
+                <tbody>
+                <tr><td>Lorem ipsum dolor sit amet</td></tr>
+                <tr><td>Consectetur adipisicing elit</td></tr>
+                <tr><td>Sed do eiusmod tempor</td></tr>
+                <tr><td>Iincididunt ut labore</td></tr>
+                <tr><td>Dolore magna aliqua</td></tr>
+                </tbody>
+                </table>
+                </div>
+                <div class="panel-footer">
+                <a href="#" class="btn btn-secondary">LEARN MORE</a>
+                </div>
+                </div>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                <!-- ITEM 3 -->
+                <div class="panel panel-pricing">
+                <header class="panel-heading">
+                <h3>GOLD PLAN</h3>
+                <div class="price">
+                <sup>$</sup>80<small>/ month</small>
+                </div>
+                </header>
+                <div class="panel-body">
+                <table class="table">
+                <tbody>
+                <tr><td>Lorem ipsum dolor sit amet</td></tr>
+                <tr><td>Consectetur adipisicing elit</td></tr>
+                <tr><td>Sed do eiusmod tempor</td></tr>
+                <tr><td>Iincididunt ut labore</td></tr>
+                <tr><td>Dolore magna aliqua</td></tr>
+                </tbody>
+                </table>
+                </div>
+                <div class="panel-footer">
+                <a href="#" class="btn btn-secondary">LEARN MORE</a>
+                </div>
+                </div>
+                </div>*@
+
+            @if (list_services != null)
+            {
+                foreach (var item in list_services)
+                {
+                    <div class="col-sm-4 col-md-4 plan">
+                        <div class="panel panel-pricing">
+                            <header class="panel-heading">
+                                <h3>@item.Name</h3>
+                                <div class="price">
+                                    <sup>@_currency</sup>@FormatNumber.Split(Math.Ceiling((decimal)item.Amount/12))<small>/ month</small>
+                                </div>
+                            </header>
+                            <div class="panel-body">
+                                <table class="table">
+                                    <p class="processed">@System.Web.HttpUtility.UrlDecode(item.Description)</p>
+                                    <tbody>
+                                        <tr><td><span class="fa fa-check-square-o"></span> The cost of clams: @FormatNumber.Split((decimal)item.Claim) @_currency</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="panel-footer">
+                                <a href="@Url.Action("Detail","Services",new { cid=item.CategoryId, iid=item.Id })" class="btn btn-secondary">LEARN MORE</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+
+    </div>
+</div>
+
+<!-- TESTIMONY -->
+<div class="section testimony">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-sm-6 col-md-3 col-md-offset-2">
+                <div class="people">
+                    <img class="user-pic" src="~/images/service.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-5 col-md-offset-1">
+
+                <div class="margin-bottom-70"></div>
+                <h2 class="title-agent">Select Your Agents Now!</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <a href="@Url.Action("","Contact")" class="btn btn-secondary" title="OUR COMPANY">FIND AN AGENTS</a>
+                <div class="margin-bottom-50"></div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="section cta">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-sm-12 col-md-7 col-md-offset-1">
+                <h3 class="cta-desc">Get An Insurance Right Now & Save up to 10%</h3>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <a href="@Url.Action("","Contact")" title="" class="btn btn-orange-cta pull-right btn-view-all">GET A QUOTE</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

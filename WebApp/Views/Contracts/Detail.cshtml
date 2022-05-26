@@ -1,0 +1,140 @@
+﻿@using WebApp.Models;
+@using Microsoft.AspNetCore.Http;
+@model Contract;
+@{
+    ViewBag.Title = "Contract Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _currency = "$";
+    var db = new InsuranceOnlineContext();
+    var user_id = Context.Session.GetInt32("user_id");
+    var u = db.Customers.FirstOrDefault(x => x.Id == user_id);
+    var i = db.Insurances.FirstOrDefault(x => x.Id == Model.InsuranceId);
+    var payment = db.Payments.FirstOrDefault(x => x.ContractId == Model.Id);
+    var list = new List<PaymentDetail>();
+
+    if (payment != null)
+    {
+        list = db.PaymentDetails.Where(x => x.PaymentId == payment.Id).ToList();
+    }
+}
+
+<div class="section banner-page services">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="title-page">Contract Detail</div>
+                <ol class="breadcrumb">
+                    <li><a href="#">Contract - @i.Name</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section project section-border">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <div class="widget info-detail">
+                    <div class="widget-title">
+                        Contract Information:
+                    </div>
+                    <dl>
+                        <dt>Signed Person: </dt>
+                        <dd>@u.Username</dd>
+                        <dt>Type: </dt>
+                        <dd>@db.Categories.FirstOrDefault(x=>x.CategoryId==i.CategoryId).CategoryName</dd>
+                        <dt>Plan: </dt>
+                        <dd>@i.Name</dd>
+                        <dt>Fee per years:</dt>
+                        <dd>@i.Amount</dd>
+                        <dt>Cost of the Claim:</dt>
+                        <dd>@i.Claim</dd>
+                        <dt>Created Date:</dt>
+                        <dd>@Model.CreatedAt.Value.ToString("dd/MM/yyyy")</dd>
+                        <dt>Expired Date:</dt>
+                        <dd>@Model.ExpriredAt.Value.ToString("dd/MM/yyyy")</dd>
+                    </dl>
+                </div>
+                <div class="widget categories">
+                    <ul class="category-nav">
+                        
+                        
+                        @{
+                            if (Model.Status == null)
+                            {
+                               <li><a href="#" class="btn canceled">Canceled</a></li>
+                            }
+                            else
+                            if (Model.Status == true)
+                            {
+                                <li><a href="#" class="btn completed">Completed</a></li>
+                            }
+                            else
+                            {
+                               <li><a href="@Url.Action("Pay", "Contracts",new {id=Model.Id})" class="btn">Pay This Contract</a></li>
+                               <li><a href="@Url.Action("Cancel","Contracts", new {id=Model.Id})" class="btn cancel" onclick="return comfirm('Are you sure want to cancel this contract?')">Cancel This Contract</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
+
+                <partial name="~/Views/Shared/_contact.cshtml" />
+
+            </div>
+            <div class="col-md-8 col-sm-8">
+                <div class="single-page">
+                    <img src="@i.Image" alt="" class="img-responsive">
+                    <div class="margin-bottom-30"></div>
+                    <div class="col-sm-8 col-md-8">
+                        <h2 class="section-heading">
+                            Payment History
+                        </h2>
+                        <p>
+                            Your insurance payment history will show up here
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12 col-md-10">
+                        <div class="box-history">
+                            @{
+                                if (list != null && list.Count > 0)
+                                {
+                                    foreach (var item in list)
+                                    {
+                                        var _month = db.PeriodicPaymentMethods.FirstOrDefault(x => x.Id == item.PeriodicId).NumberOfMonth;
+                                        var _m = _month + " Months";
+                                        if (_month == 1)
+                                        {
+                                            _m = _month + " Month";
+                                        }
+
+                                        <div class="item">
+                                            <div class="year">@item.CreatedAt.Value.ToString("d")</div>
+                                            <div class="year-info">
+                                                <div class="heading">Paid <strong>@((int)item.PaidAmount) @_currency</strong> for @_m</div>
+                                                @{
+                                                    if (!string.IsNullOrEmpty(item.ContentDetails))
+                                                    {
+                                                        <p>@System.Web.HttpUtility.HtmlDecode(item.ContentDetails)</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>No message !</p>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
