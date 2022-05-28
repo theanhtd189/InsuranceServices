@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
+using X.PagedList;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -15,10 +16,17 @@ namespace WebApp.Areas.Admin.Controllers
         private readonly InsuranceOnlineContext db = new InsuranceOnlineContext();
 
         // GET: Admin/Policy
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page=1, int limit=10)
         {
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPage = Math.Ceiling((decimal)db.Policies.ToList().Count/limit);
+            if (limit != 10)
+            {
+                ViewBag.Limit = limit;
+            }
             var insuranceOnlineContext = db.Policies.Include(p => p.Insurance);
-            return View(await insuranceOnlineContext.ToListAsync());
+            var result = await insuranceOnlineContext.OrderBy(x => x.Id).ToPagedListAsync(page,limit);
+            return View(result);
         }
 
         // GET: Admin/Policy/Details/5
@@ -43,7 +51,7 @@ namespace WebApp.Areas.Admin.Controllers
         // GET: Admin/Policy/Create
         public IActionResult Create()
         {
-            ViewData["InsuranceId"] = new SelectList(db.Insurances, "Id", "Id");
+            ViewData["InsuranceId"] = new SelectList(db.Insurances, "Id", "Name");
             return View();
         }
 
@@ -60,7 +68,7 @@ namespace WebApp.Areas.Admin.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InsuranceId"] = new SelectList(db.Insurances, "Id", "Id", policy.InsuranceId);
+            ViewData["InsuranceId"] = new SelectList(db.Insurances, "Id", "Name", policy.InsuranceId);
             return View(policy);
         }
 
@@ -77,7 +85,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["InsuranceId"] = new SelectList(db.Insurances, "Id", "Id", policy.InsuranceId);
+            ViewData["InsuranceId"] = new SelectList(db.Insurances, "Id", "Name", policy.InsuranceId);
             return View(policy);
         }
 
@@ -97,6 +105,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 try
                 {
+                    policy.UpdatedAt = DateTime.Now;
                     db.Update(policy);
                     await db.SaveChangesAsync();
                 }
@@ -113,7 +122,7 @@ namespace WebApp.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InsuranceId"] = new SelectList(db.Insurances, "Id", "Id", policy.InsuranceId);
+            ViewData["InsuranceId"] = new SelectList(db.Insurances, "Id", "Name", policy.InsuranceId);
             return View(policy);
         }
 

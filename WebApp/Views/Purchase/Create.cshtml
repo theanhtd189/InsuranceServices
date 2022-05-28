@@ -91,7 +91,7 @@
 								<div class="col-sm-6 col-md-6">
 									<div class="form-group">
 										<label class="">Expiration date</label>
-										<input type="text" class="form-control" name="Exprired_at" id="Exprired_at" value="1" min="1" readonly>
+										<input type="text" class="form-control" name="Expired_at" id="Expired_at" value="1" min="1" readonly>
 									</div>
 								</div>				
 								<div class="col-sm-6 col-md-6">
@@ -148,14 +148,14 @@ $(document).ready(function(){
 		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 		var dateTime = date+' '+time;
 
-		$("#Exprired_at").val((today.getFullYear()+1)+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds())
+		$("#Expired_at").val((today.getFullYear()+1)+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds())
 		$("#Created_at").val(dateTime)
 
 		$("#duration").change(function(){
 			var vl = Number($(this).val())
 			var expired = new Date().getFullYear() + vl
 
-			$("#Exprired_at").val(expired+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds())
+			$("#Expired_at").val(expired+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds())
 
 			$("#total").val(@Math.Ceiling((decimal)Model.Amount) * vl)
 

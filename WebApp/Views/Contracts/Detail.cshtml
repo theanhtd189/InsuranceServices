@@ -53,7 +53,7 @@
                         <dt>Created Date:</dt>
                         <dd>@Model.CreatedAt.Value.ToString("dd/MM/yyyy")</dd>
                         <dt>Expired Date:</dt>
-                        <dd>@Model.ExpriredAt.Value.ToString("dd/MM/yyyy")</dd>
+                        <dd>@Model.ExpiredAt.Value.ToString("dd/MM/yyyy")</dd>
                     </dl>
                 </div>
                 <div class="widget categories">
@@ -63,7 +63,7 @@
                         @{
                             if (Model.Status == null)
                             {
-                               <li><a href="#" class="btn canceled">Canceled</a></li>
+                               <li><a href="#" class="btn canceled">Cancelled</a></li>
                             }
                             else
                             if (Model.Status == true)

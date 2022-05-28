@@ -12,42 +12,43 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+             <div class="form-group">
+                <label asp-for="CustomerId" class="control-label">Customer</label>
+                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="InsuranceId" class="control-label">Insurance</label>
+                <select asp-for="InsuranceId" class="form-control" asp-items="ViewBag.InsuranceId"></select>
+            </div>
             <div class="form-group">
                 <label asp-for="Beneficiary" class="control-label"></label>
                 <input asp-for="Beneficiary" class="form-control" />
                 <span asp-validation-for="Beneficiary" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Duration" class="control-label"></label>
-                <input asp-for="Duration" class="form-control" />
+                <label asp-for="CreatedAt" class="control-label"></label>
+                <input asp-for="CreatedAt" class="form-control" id="CreatedAt"/>
+                <span asp-validation-for="ExpiredAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpiredAt" class="control-label"></label>
+                <input asp-for="ExpiredAt" class="form-control" id="ExpiredAt"/>
+                <span asp-validation-for="ExpiredAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Duration" class="control-label">Duration (Year)</label>
+                <input asp-for="Duration" class="form-control" id="duration"/>
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ExpriredAt" class="control-label"></label>
-                <input asp-for="ExpriredAt" class="form-control" />
-                <span asp-validation-for="ExpriredAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
-                <span asp-validation-for="CustomerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InsuranceId" class="control-label"></label>
-                <select asp-for="InsuranceId" class="form-control" asp-items="ViewBag.InsuranceId"></select>
-                <span asp-validation-for="InsuranceId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
+                <select name="Status">
+                    <option value="True" selected>Completed</option>
+                    <option value="False">Maintaining</option>
+                    <option value="Null">Cancelled</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Total" class="control-label"></label>

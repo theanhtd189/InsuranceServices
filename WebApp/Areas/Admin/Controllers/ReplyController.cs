@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
+using X.PagedList;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -16,10 +17,17 @@ namespace WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Reply
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page=1, int limit=10)
         {
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPage = Math.Ceiling((decimal)db.Replies.ToList().Count / limit);
+            if (limit != 10)
+            {
+                ViewBag.Limit = limit;
+            }
             var insuranceOnlineContext = db.Replies.Include(r => r.Faqs);
-            return View(await insuranceOnlineContext.ToListAsync());
+            var result = await insuranceOnlineContext.ToPagedListAsync(page,limit);
+            return View(result);
         }
 
         // GET: Admin/Reply/Details/5
@@ -44,7 +52,7 @@ namespace WebApp.Areas.Admin.Controllers
         // GET: Admin/Reply/Create
         public IActionResult Create()
         {
-            ViewData["FaqsId"] = new SelectList(db.Faqs, "Id", "Id");
+            ViewData["FaqsId"] = new SelectList(db.Faqs, "Id", "Question");
             return View();
         }
 
@@ -61,7 +69,7 @@ namespace WebApp.Areas.Admin.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FaqsId"] = new SelectList(db.Faqs, "Id", "Id", reply.FaqsId);
+            ViewData["FaqsId"] = new SelectList(db.Faqs, "Id", "Question", reply.FaqsId);
             return View(reply);
         }
 
@@ -78,7 +86,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["FaqsId"] = new SelectList(db.Faqs, "Id", "Id", reply.FaqsId);
+            ViewData["FaqsId"] = new SelectList(db.Faqs, "Id", "Question", reply.FaqsId);
             return View(reply);
         }
 
@@ -114,7 +122,7 @@ namespace WebApp.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FaqsId"] = new SelectList(db.Faqs, "Id", "Id", reply.FaqsId);
+            ViewData["FaqsId"] = new SelectList(db.Faqs, "Id", "Question", reply.FaqsId);
             return View(reply);
         }
 

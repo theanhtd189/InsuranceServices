@@ -1,67 +1,139 @@
 ﻿@model WebApp.Models.Contract
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Contract Details";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var db = new InsuranceOnlineContext();
 }
 
-<h1>Details</h1>
+<h1>Contract Details</h1>
+<p style="padding: 15px;">
+    <a href="@Url.Action("","Contract")" class="ta-btn">Back</a>
+    @{
+        if (Model.Status == false)
+        {
+            <a href="@Url.Action("Create","PaymentDetail", new {ContractId=Model.Id})" class="ta-btn">Add New Payment</a>
+        }
+    }
+</p>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <div id="invoice" class="p-h-30">
+                <div class="m-t-15 lh-2">
+                    <div class="inline-block">
+                        <address class="p-l-10">
+                            @{
+                                if (Model.Status == null)
+                                {
+                                    <span class="font-weight-semibold text-dark">Status: Cancelled</span>
+                                }
+                                else
+                                                if (Model.Status == true)
+                                {
+                                    <span class="font-weight-semibold text-dark">Status: Completed</span>
+                                }
+                                else
+                                {
+                                    <span class="font-weight-semibold text-dark">Status: Maintaining</span>
+                                }
+                            }
+                        </address>
+                    </div>
+                    <div class="float-right">
+                        <h2>@Model.Insurance.Name</h2>
+                    </div>
+                </div>
+                <div class="row m-t-20 lh-2">
+                    <div class="col-sm-9">
+                        <h3 class="p-l-10 m-t-10">Contract #NO@(Model.Id)</h3>
+                        <address class="p-l-10 m-t-10">
+                            <span class="font-weight-semibold text-dark">@Model.Customer.Username</span><br>
+                            <span>@Model.Customer.Email</span><br>
+                            <span>@Model.Customer.Address</span>
+                        </address>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="text-dark text-uppercase d-inline-block">
+                            <span class="font-weight-semibold text-dark">Created Date :</span>
+                        </div>
+                        <div class="float-right">@Model.CreatedAt.Value.ToString("d")</div>
+                        <div class="text-dark text-uppercase d-inline-block">
+                            <span class="font-weight-semibold text-dark">Expired Date :</span>
+                        </div>
+                        <div class="float-right">@Model.ExpiredAt.Value.ToString("d")</div>
+                    </div>
+                </div>
+                <div class="m-t-20">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Content</th>
+                                    <th>Month</th>
+                                    <th>Paid Amount</th>
+                                    <th>Total</th>
+                                    @{
+                                        if (Model.Status != null)
 
-<div>
-    <h4>Contract</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Beneficiary)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Beneficiary)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Duration)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Duration)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ExpriredAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ExpriredAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Total)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Total)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Customer)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customer.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Insurance)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Insurance.Id)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+                                        {
+                                            <th>Action</th>
+                                        }
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var stt = 1;
+                                    var _list = Model.Payments.First().PaymentDetails.ToList();
+                                    if (_list != null && _list.Count > 0)
+                                        foreach (var item in _list)
+                                        {
+                                            var m = db.PeriodicPaymentMethods.FirstOrDefault(x => x.Id == item.PeriodicId);
+                                            <tr>
+                                                <th>@(stt++)</th>
+                                                <th>@item.ContentDetails</th>
+                                                <th>@m.NumberOfMonth</th>
+                                                <th>@((int)item.PaidAmount)</th>
+                                                <th>@((int)item.PaidAmount)</th>
+                                                @{
+                                                    if (Model.Status != null)
+                                                    {
+                                                        <th>
+                                                            <a href="@Url.Action("Edit","PaymentDetail", new {id=item.Id})">Edit</a> |
+                                                            <a href="@Url.Action("Delete","PaymentDetail",new {id=item.Id,contractid=Model.Id})">Delete</a>
+                                                        </th>
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row m-t-30 lh-1-8">
+                        <div class="col-sm-12">
+                            <div class="float-right text-right">
+                                @{
+                                    decimal t = 0;
+                                    var _l = db.PaymentDetails.Where(x=>x.PaymentId==Model.Payments.First().Id).ToList();
+                                    if (_l != null && _l.Count>0)
+                                    {
+                                        foreach(var item in _l)
+                                        {
+                                            t = t + item.PaidAmount;
+                                        }
+                                    }
+                                }
+                                <p>Total paid amount: $@((int)t)</p>
+                                <hr>
+                                <h3><span class="font-weight-semibold text-dark">Total cost of this contract :</span> $@((int)Model.Total)</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

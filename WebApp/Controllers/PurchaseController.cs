@@ -34,12 +34,12 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Process(int InsuranceID, int CustomerID, string Created_at, string Exprired_at,int duration, decimal Total)
+        public ActionResult Process(int InsuranceID, int CustomerID, string Created_at, string Expired_at,int duration, decimal Total)
         {
             var e = new Contract
             {
                 CreatedAt = DateTime.Parse(Created_at),
-                ExpriredAt = DateTime.Parse(Exprired_at),
+                ExpiredAt = DateTime.Parse(Expired_at),
                 Status =false,
                 CustomerId= CustomerID,
                 InsuranceId=InsuranceID,

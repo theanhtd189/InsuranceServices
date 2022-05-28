@@ -12,28 +12,21 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedAt" />
+            <input type="hidden" asp-for="UpdatedAt" value="@DateTime.Now" />
+            <div class="form-group">
+                <label asp-for="FaqsId" class="control-label">Question</label>
+                <select asp-for="FaqsId" class="form-control" asp-items="ViewBag.FaqsId"></select>
+                <span asp-validation-for="FaqsId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Answer" class="control-label"></label>
                 <input asp-for="Answer" class="form-control" />
                 <span asp-validation-for="Answer" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedAt" class="control-label"></label>
-                <input asp-for="UpdatedAt" class="form-control" />
-                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FaqsId" class="control-label"></label>
-                <select asp-for="FaqsId" class="form-control" asp-items="ViewBag.FaqsId"></select>
-                <span asp-validation-for="FaqsId" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

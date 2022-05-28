@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
+using X.PagedList;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -16,10 +17,17 @@ namespace WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Payment
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page=1, int limit=10)
         {
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPage = Math.Ceiling((decimal)db.Payments.ToList().Count / limit);
+            if (limit != 10)
+            {
+                ViewBag.Limit = limit;
+            }
             var insuranceOnlineContext = db.Payments.Include(p => p.Contract);
-            return View(await insuranceOnlineContext.ToListAsync());
+            var result = await insuranceOnlineContext.OrderBy(x => x.Id).ToPagedListAsync(page,limit);
+            return View(result);
         }
 
         // GET: Admin/Payment/Details/5
@@ -37,7 +45,6 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
             return View(payment);
         }
 

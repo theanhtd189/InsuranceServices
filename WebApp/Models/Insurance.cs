@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApp.Models
 {
@@ -27,9 +26,5 @@ namespace WebApp.Models
         public virtual ICollection<Contract> Contracts { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<Policy> Policies { get; set; }
-        
-        /*
-        [NotMapped]
-        public IFormFile FormFile { get; set; }*/
     }
 }

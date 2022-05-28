@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using X.PagedList;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -13,12 +15,27 @@ namespace WebApp.Areas.Admin.Controllers
     public class NewsController : Controller
     {
         private readonly InsuranceOnlineContext db = new InsuranceOnlineContext();
+        [Obsolete]
+        private readonly IWebHostEnvironment hostingEnvironment;
+        private readonly IConfiguration configuration;
 
-        // GET: Admin/News
-        public async Task<IActionResult> Index()
+        [Obsolete]
+        public NewsController(IWebHostEnvironment environment, IConfiguration Aconfiguration)
         {
+            hostingEnvironment = environment;
+            configuration = Aconfiguration;
+        }
+        public async Task<IActionResult> Index(int page=1, int limit=10)
+        {
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPage = Math.Ceiling((decimal)db.News.ToList().Count / limit);
+            if (limit != 10)
+            {
+                ViewBag.Limit = limit;
+            }
+            var result = await db.News.OrderBy(x=>x.Id).ToPagedListAsync(page,limit);
               return db.News != null ? 
-                          View(await db.News.ToListAsync()) :
+                          View(result) :
                           Problem("Entity set 'InsuranceOnlineContext.News'  is null.");
         }
 
@@ -51,10 +68,26 @@ namespace WebApp.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Author,CreatedAt,Content,Image")] News news)
+        [Obsolete]
+        public async Task<IActionResult> Create(News news, IFormFile? ImageFile)
         {
             if (ModelState.IsValid)
             {
+                if (ImageFile != null)
+                {
+                    var fileName = Path.GetFileName(ImageFile.FileName);
+
+                    var sys_dir = hostingEnvironment.WebRootPath;
+                    var path = Path.Combine(sys_dir + configuration["News_Image_Dir"],
+                                        fileName);
+
+                    using (var stream = System.IO.File.Create(path))
+                    {
+                        await ImageFile.CopyToAsync(stream);
+                        news.Image = configuration["News_Image_Dir"] + fileName;
+                    }
+                }
+                
                 db.Add(news);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -83,7 +116,8 @@ namespace WebApp.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Author,CreatedAt,Content,Image")] News news)
+        [Obsolete]
+        public async Task<IActionResult> Edit(int id, News news, IFormFile? ImageFile)
         {
             if (id != news.Id)
             {
@@ -94,6 +128,20 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 try
                 {
+                    if (ImageFile != null)
+                    {
+                        var fileName = Path.GetFileName(ImageFile.FileName);
+
+                        var sys_dir = hostingEnvironment.WebRootPath;
+                        var path = Path.Combine(sys_dir + configuration["News_Image_Dir"],
+                                            fileName);
+
+                        using (var stream = System.IO.File.Create(path))
+                        {
+                            await ImageFile.CopyToAsync(stream);
+                            news.Image = configuration["News_Image_Dir"] + fileName;
+                        }
+                    }
                     db.Update(news);
                     await db.SaveChangesAsync();
                 }

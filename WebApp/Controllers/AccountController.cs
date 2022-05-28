@@ -66,6 +66,12 @@ namespace WebApp.Controllers
         [HttpGet,Route("Login")]
         public ActionResult Login(string? callback)
         {
+            var uid = HttpContext.Session.GetInt32("user_id");
+            if (uid!=null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
             if (TempData["Msg"] != null)
             {
                 ViewBag.Msg = TempData["Msg"].ToString();

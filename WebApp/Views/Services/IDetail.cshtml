@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var db = new WebApp.Models.InsuranceOnlineContext();
     var list = db.Insurances.Where(x => x.CategoryId == Model.CategoryId).ToList();
-    var curency = "VND";
+    var curency = "$";
     var _catname = db.Categories.FirstOrDefault(x => x.CategoryId == Model.CategoryId) != null ? db.Categories.FirstOrDefault(x => x.CategoryId == Model.CategoryId).CategoryName : "Service";
 }
 

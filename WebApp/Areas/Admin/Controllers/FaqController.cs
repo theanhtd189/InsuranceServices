@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
+using X.PagedList;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -14,10 +15,17 @@ namespace WebApp.Areas.Admin.Controllers
     {
         private readonly InsuranceOnlineContext db = new InsuranceOnlineContext();
         // GET: Admin/Faq
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page=1,int limit=10)
         {
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPage = Math.Ceiling((decimal)db.Faqs.ToList().Count / limit);
+            if (limit != 10)
+            {
+                ViewBag.Limit = limit;
+            }
+            var result = await db.Faqs.OrderBy(x => x.Id).Include(x=>x.Replies).ToPagedListAsync(page,limit);
               return db.Faqs != null ? 
-                          View(await db.Faqs.ToListAsync()) :
+                          View(result) :
                           Problem("Entity set 'InsuranceOnlineContext.Faqs'  is null.");
         }
 
@@ -29,7 +37,7 @@ namespace WebApp.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var faq = await db.Faqs
+            var faq = await db.Faqs.Include(x=>x.Replies)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (faq == null)
             {
@@ -38,6 +46,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(faq);
         }
+
 
         // GET: Admin/Faq/Create
         public IActionResult Create()

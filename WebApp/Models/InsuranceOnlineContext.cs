@@ -86,9 +86,9 @@ namespace WebApp.Models
 
                 entity.Property(e => e.Duration).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ExpriredAt)
+                entity.Property(e => e.ExpiredAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("Exprired_at");
+                    .HasColumnName("Expired_at");
 
                 entity.Property(e => e.InsuranceId).HasColumnName("InsuranceID");
 
@@ -284,13 +284,11 @@ namespace WebApp.Models
                 entity.HasOne(d => d.Payment)
                     .WithMany(p => p.PaymentDetails)
                     .HasForeignKey(d => d.PaymentId)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PaymentDetails_Payments");
 
                 entity.HasOne(d => d.Periodic)
                     .WithMany(p => p.PaymentDetails)
                     .HasForeignKey(d => d.PeriodicId)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PaymentDetails_PeriodicPaymentMethods");
             });
 

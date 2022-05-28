@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
+using X.PagedList;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -16,10 +17,17 @@ namespace WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Customer
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page=1, int limit=10)
         {
-              return db.Customers != null ? 
-                          View(await db.Customers.ToListAsync()) :
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPage = Math.Ceiling((decimal)db.Customers.ToList().Count / limit);
+            if (limit != 10)
+            {
+                ViewBag.Limit = limit;
+            }
+            var result = await db.Customers.ToPagedListAsync(page,limit);
+            return db.Customers != null ? 
+                          View(result) :
                           Problem("Entity set 'InsuranceOnlineContext.Customers'  is null.");
         }
 
@@ -34,6 +42,23 @@ namespace WebApp.Areas.Admin.Controllers
             if (customer != null)
             {
                 customer.Status = false;
+            }
+
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Active(int id)
+        {
+            if (db.Customers == null)
+            {
+                return Problem("Entity set 'InsuranceOnlineContext.Customers'  is null.");
+            }
+            var customer = await db.Customers.FindAsync(id);
+            if (customer != null)
+            {
+                customer.Status = true;
             }
 
             await db.SaveChangesAsync();

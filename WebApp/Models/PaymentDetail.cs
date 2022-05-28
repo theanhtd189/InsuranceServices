@@ -10,10 +10,10 @@ namespace WebApp.Models
         public decimal PaidAmount { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public int? PaymentId { get; set; }
-        public int? PeriodicId { get; set; }
+        public int PaymentId { get; set; }
+        public int PeriodicId { get; set; }
 
-        public virtual Payment? Payment { get; set; }
-        public virtual PeriodicPaymentMethod? Periodic { get; set; }
+        public virtual Payment Payment { get; set; } = null!;
+        public virtual PeriodicPaymentMethod Periodic { get; set; } = null!;
     }
 }

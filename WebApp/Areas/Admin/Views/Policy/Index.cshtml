@@ -1,11 +1,11 @@
-﻿@model IEnumerable<WebApp.Models.Policy>
+﻿@model X.PagedList.IPagedList<WebApp.Models.Policy>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>List</h1>
+<h1>Policy Manager</h1>
 
 <p>
     <a asp-action="Create" class="ta-btn">Create New</a>
@@ -14,21 +14,15 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Name
             </th>
             <th class="processed">
-                @Html.DisplayNameFor(model => model.Description)
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
+                Insurance
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Insurance)
-            </th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -41,13 +35,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Insurance.Id)
+                @Html.DisplayFor(modelItem => item.Insurance.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

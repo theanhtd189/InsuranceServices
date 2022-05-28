@@ -1,0 +1,44 @@
+﻿@model WebApp.Models.PaymentDetail
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>PaymentDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" name="PaymentId" value="@ViewBag.PaymentId" />
+            <input type="hidden" name="ContractId" value="@ViewBag.ContractId" />
+            <input type="hidden" name="UpdatedAt" value="@DateTime.Now" />
+            <div class="form-group">
+                <label asp-for="PaidAmount" class="control-label">Amount to pay</label>
+                <input asp-for="PaidAmount" class="form-control" />
+                <span asp-validation-for="PaidAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContentDetails" class="control-label">Content</label>
+                <input asp-for="ContentDetails" class="form-control" />
+                <span asp-validation-for="ContentDetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PeriodicId" class="control-label">Month</label>
+                <select asp-for="PeriodicId" class="form-control" asp-items="ViewBag.PeriodicId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

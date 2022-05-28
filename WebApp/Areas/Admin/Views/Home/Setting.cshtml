@@ -1,0 +1,47 @@
+﻿@model WebApp.Models.Admin
+
+@{
+    ViewData["Title"] = "Setting";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="tab-content m-t-15">
+        <div class="tab-pane fade show active" id="tab-account">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Account Infomation</h4>
+                </div>
+                <div class="card-body">
+                    <form action="Setting" method="post">
+                        <input type="hidden" value="@Model.Id" name="ID" />
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-semibold" for="userName">User Name:</label>
+                                <input type="text" class="form-control" name="Username" id="userName" placeholder="User Name" value="@Model.Username" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-semibold">New Password:</label>
+                                <input type="password" class="form-control" id="p1" name="Password" placeholder="Password">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-semibold">Repeat Password:</label>
+                                <input type="password" class="form-control" id="p2" placeholder="Repeat Password">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <button class="btn btn-primary m-t-30">Save Change</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+
+    })
+</script>

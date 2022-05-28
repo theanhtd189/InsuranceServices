@@ -14,7 +14,7 @@ namespace WebApp.Models
         public string? Beneficiary { get; set; }
         public int Duration { get; set; }
         public DateTime? CreatedAt { get; set; }
-        public DateTime? ExpriredAt { get; set; }
+        public DateTime? ExpiredAt { get; set; }
         public int? CustomerId { get; set; }
         public int? InsuranceId { get; set; }
         public bool? Status { get; set; }

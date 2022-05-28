@@ -1,7 +1,7 @@
-﻿@model IEnumerable<WebApp.Models.Payment>
+﻿@model X.PagedList.IPagedList<WebApp.Models.Payment>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,12 +14,12 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Total)
+               Total
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Contract)
+                Contract
             </th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>

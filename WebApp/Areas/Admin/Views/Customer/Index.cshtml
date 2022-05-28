@@ -1,74 +1,100 @@
-﻿@model IEnumerable<WebApp.Models.Customer>
+﻿@model X.PagedList.IPagedList<WebApp.Models.Customer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>List</h1>
+<h1>Customer Manager</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Username)
+                Username
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Gender)
+                Gender
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Birthday)
+                Birthday
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Phone)
+                Phone
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                Address
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                Status
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Birthday)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                <a href="@Url.Action("Details","Customer", new {id=item.Id})">Details</a> |
-                <a href="@Url.Action("Disable","Customer", new {id=item.Id})">Disable</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @{
+
+                        if ((bool)item.Gender)
+                        {
+                            <span>Male</span>
+                        }
+                        else
+                        {
+                            <span>Female</span>
+                        }
+                    }
+                </td>
+                <td>
+                    @item.Birthday.Value.ToString("d")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @{
+
+                        if ((bool)item.Status)
+                        {
+                            <span class="act">Actived</span>
+                        }
+                        else
+                        {
+                            <span class="dis">Disabled</span>
+                        }
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Details","Customer", new {id=item.Id})">Details</a> |
+                    @{
+                        if ((bool)item.Status)
+                        {
+                             <a href="@Url.Action("Disable","Customer", new {id=item.Id})">Disable</a>
+                            
+                        }
+                        else
+                        {
+                           <a href="@Url.Action("Active","Customer", new {id=item.Id})">Active</a>
+                        }
+                    }
+
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

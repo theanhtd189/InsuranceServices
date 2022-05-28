@@ -1,11 +1,12 @@
-﻿@model IEnumerable<WebApp.Models.Reply>
+﻿@using X.PagedList
+@model IPagedList<WebApp.Models.Reply>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>List</h1>
+<h1>FAQ's Reply Manager</h1>
 
 <p>
     <a asp-action="Create" class="ta-btn">Create New</a>
@@ -13,35 +14,23 @@
 <table class="table">
     <thead>
         <tr>
-            <th class="processed">
-                @Html.DisplayNameFor(model => model.Answer)
+            <th>
+                Answer
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
+                Created At
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Faqs)
-            </th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+            <td class="processed">
                 @Html.DisplayFor(modelItem => item.Answer)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Faqs.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

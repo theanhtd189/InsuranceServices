@@ -46,7 +46,7 @@ app.UseRouting();
 
 app.UseSession();
 
-//app.UseMiddleware<CheckAdminSessionMiddleware>();
+app.UseMiddleware<CheckAdminSessionMiddleware>();
 
 app.UseMiddleware<CheckSessionMiddleware>();
 

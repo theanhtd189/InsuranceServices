@@ -8,9 +8,11 @@ namespace WebApp.Middlewares
         public CheckSessionMiddleware(RequestDelegate next) => _next = next;
         public async Task Invoke(HttpContext httpContext)
         {
-            var rule1 = httpContext.Request.Path.ToString().Contains("Account");
-            var rule2 = httpContext.Request.Path.ToString().Contains("Purchase");
-            var rule3 = httpContext.Request.Path.ToString().Contains("Contracts");
+            var rule1 = httpContext.Request.Path.ToString().ToLower().Contains("account");
+            var rule2 = httpContext.Request.Path.ToString().ToLower().Contains("purchase");
+            var rule3 = httpContext.Request.Path.ToString().ToLower().Contains("contracts");
+            var rule4 = httpContext.Request.Path.ToString().ToLower().Contains("login");
+
 
             if ( rule1 || rule2 || rule3)
             {

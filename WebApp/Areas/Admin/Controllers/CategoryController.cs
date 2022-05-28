@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
+using X.PagedList;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -13,13 +13,29 @@ namespace WebApp.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private InsuranceOnlineContext db = new InsuranceOnlineContext();
+        [Obsolete]
+        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment;
+        private readonly IConfiguration configuration;
 
-        // GET: Admin/Category
-        public async Task<IActionResult> Index()
+        [Obsolete]
+        public CategoryController(Microsoft.AspNetCore.Hosting.IHostingEnvironment environment, IConfiguration Aconfiguration)
         {
-              return db.Categories != null ? 
-                          View(await db.Categories.ToListAsync()) :
-                          Problem("Entity set 'InsuranceOnlineContext.Categories'  is null.");
+            hostingEnvironment = environment;
+            configuration = Aconfiguration;
+        }
+        // GET: Admin/Category
+        public async Task<IActionResult> Index(int page = 1, int limit = 10)
+        {
+            var result = await db.Categories.Include(x => x.Insurances).OrderBy(x=>x.CategoryId).ToPagedListAsync(page, limit);
+            ViewBag.TotalPage = Math.Ceiling((decimal)db.Categories.ToList().Count / limit);
+            ViewBag.CurrentPage = page;
+            if (limit != 10)
+            {
+                ViewBag.Limit = limit;
+            }
+            return db.Categories != null ?
+                        View(result) :
+                        Problem("Entity set 'InsuranceOnlineContext.Categories'  is null.");
         }
 
         // GET: Admin/Category/Details/5
@@ -51,10 +67,26 @@ namespace WebApp.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,Description,CreatedAt,UpdatedAt,Image")] Category category)
+        [Obsolete]
+        public async Task<IActionResult> Create(Category category, IFormFile? ImageFile)
         {
             if (ModelState.IsValid)
             {
+                if (ImageFile != null)
+                {
+                    var fileName = Path.GetFileName(ImageFile.FileName);
+
+                    var sys_dir = hostingEnvironment.WebRootPath;
+                    var path = Path.Combine(sys_dir + configuration["InsuranceType_Image_Dir"],
+                                        fileName);
+
+                    using (var stream = System.IO.File.Create(path))
+                    {
+                        await ImageFile.CopyToAsync(stream);
+                        category.Image = configuration["InsuranceType_Image_Dir"] + fileName;
+                    }
+                }
+                category.UpdatedAt = DateTime.Now;
                 db.Add(category);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -83,34 +115,46 @@ namespace WebApp.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName,Description,CreatedAt,UpdatedAt,Image")] Category category)
+        [Obsolete]
+        public async Task<IActionResult> Edit(int id, Category category, IFormFile? ImageFile)
         {
             if (id != category.CategoryId)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            try
             {
-                try
+                category.UpdatedAt = DateTime.Now;
+                if (ImageFile != null)
                 {
-                    db.Update(category);
-                    await db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CategoryExists(category.CategoryId))
+                    var fileName = Path.GetFileName(ImageFile.FileName);
+
+                    var sys_dir = hostingEnvironment.WebRootPath;
+                    var path = Path.Combine(sys_dir + configuration["InsuranceType_Image_Dir"],
+                                        fileName);
+
+                    using (var stream = System.IO.File.Create(path))
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
+                        await ImageFile.CopyToAsync(stream);
+                        category.Image = configuration["InsuranceType_Image_Dir"] + fileName;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                db.Update(category);
+                await db.SaveChangesAsync();
             }
-            return View(category);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CategoryExists(category.CategoryId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+
         }
 
         // GET: Admin/Category/Delete/5
@@ -145,14 +189,14 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 db.Categories.Remove(category);
             }
-            
+
             await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoryExists(int id)
         {
-          return (db.Categories?.Any(e => e.CategoryId == id)).GetValueOrDefault();
+            return (db.Categories?.Any(e => e.CategoryId == id)).GetValueOrDefault();
         }
     }
 }

@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
-using WebApp.Areas.Admin.Models;
 using Microsoft.Extensions.Hosting.Internal;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using X.PagedList;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -27,10 +27,17 @@ namespace WebApp.Areas.Admin.Controllers
             configuration = Aconfiguration;
         }
         // GET: Admin/Insurance
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page=1,int limit=10)
         {
             var insuranceOnlineContext = db.Insurances.Include(i => i.Category);
-            return View(await insuranceOnlineContext.ToListAsync());
+            var result = await insuranceOnlineContext.ToPagedListAsync(page,limit);
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPage = Math.Ceiling((decimal)insuranceOnlineContext.ToList().Count / limit);
+            if (limit != 10)
+            {
+                ViewBag.Limit = limit;
+            }
+            return View(result);
         }
 
         // GET: Admin/Insurance/Details/5
@@ -65,7 +72,7 @@ namespace WebApp.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Obsolete]
-        public async Task<IActionResult> Create(Insurance insurance, IFormFile ImageFile)
+        public async Task<IActionResult> Create(Insurance insurance, IFormFile? ImageFile)
         {
             if (ModelState.IsValid)
             {
@@ -74,13 +81,13 @@ namespace WebApp.Areas.Admin.Controllers
                     var fileName = Path.GetFileName(ImageFile.FileName);
 
                     var sys_dir = hostingEnvironment.WebRootPath;
-                    var path = Path.Combine(sys_dir + configuration["File_Image_Dir"],
+                    var path = Path.Combine(sys_dir + configuration["Insurance_Image_Dir"],
                                         fileName);
  
                     using (var stream = System.IO.File.Create(path))
                     {
                         await ImageFile.CopyToAsync(stream);
-                        insurance.Image = configuration["File_Image_Dir"]+fileName;
+                        insurance.Image = configuration["Insurance_Image_Dir"]+fileName;
                     }
                 }
 
@@ -88,7 +95,7 @@ namespace WebApp.Areas.Admin.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(db.Categories, "CategoryId", "CategoryId", insurance.CategoryId);
+            ViewData["CategoryId"] = new SelectList(db.Categories, "CategoryId", "CategoryName", insurance.CategoryId);
             return View(insurance);
         }
 
@@ -105,7 +112,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(db.Categories, "CategoryId", "CategoryId", insurance.CategoryId);
+            ViewData["CategoryId"] = new SelectList(db.Categories, "CategoryId", "CategoryName", insurance.CategoryId);
             return View(insurance);
         }
 
@@ -114,7 +121,8 @@ namespace WebApp.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CategoryId,Name,Description,CreatedAt,UpdatedAt,Amount,Image,Claim")] Insurance insurance)
+        [Obsolete]
+        public async Task<IActionResult> Edit(int id, Insurance insurance, IFormFile? ImageFile)
         {
             if (id != insurance.Id)
             {
@@ -125,6 +133,21 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 try
                 {
+                    insurance.UpdatedAt = DateTime.Now;
+                    if (ImageFile != null)
+                    {
+                        var fileName = Path.GetFileName(ImageFile.FileName);
+
+                        var sys_dir = hostingEnvironment.WebRootPath;
+                        var path = Path.Combine(sys_dir + configuration["Insurance_Image_Dir"],
+                                            fileName);
+
+                        using (var stream = System.IO.File.Create(path))
+                        {
+                            await ImageFile.CopyToAsync(stream);
+                            insurance.Image = configuration["Insurance_Image_Dir"] + fileName;
+                        }
+                    }
                     db.Update(insurance);
                     await db.SaveChangesAsync();
                 }
@@ -141,7 +164,7 @@ namespace WebApp.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(db.Categories, "CategoryId", "CategoryId", insurance.CategoryId);
+            ViewData["CategoryId"] = new SelectList(db.Categories, "CategoryId", "CategoryName", insurance.CategoryId);
             return View(insurance);
         }
 

@@ -1,6 +1,9 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc;
+@{
     var _title = "ADMIN";
     var _name = "ADMIN";
+    var _controller = ViewContext.RouteData.Values["controller"].ToString();
+    var _action = ViewContext.RouteData.Values["action"].ToString();
     if (ViewBag.Title != null)
     {
         _title = ViewBag.Title;
@@ -20,7 +23,8 @@
     <title>@_title</title>
     <link rel="shortcut icon" href="~/assets/images/logo/favicon.png">
     <link href="~/assets/css/app.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/assets/css/main.css"/>
+    <link rel="stylesheet" href="~/assets/css/main.css" />
+    <script type="text/javascript" src="~/js/vendor/jquery.min.js"></script>
 </head>
 
 <body>
@@ -74,58 +78,58 @@
                                 </div>
                                 @*<div class="relative">
                                     <div class="overflow-y-auto relative scrollable" style="max-height: 300px">
-                                        <a href="javascript:void(0);" class="dropdown-item d-block p-15 border-bottom">
-                                            <div class="d-flex">
-                                                <div class="avatar avatar-blue avatar-icon">
-                                                    <i class="anticon anticon-mail"></i>
-                                                </div>
-                                                <div class="m-l-15">
-                                                    <p class="m-b-0 text-dark">You received a new message</p>
-                                                    <p class="m-b-0"><small>8 min ago</small></p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="javascript:void(0);" class="dropdown-item d-block p-15 border-bottom">
-                                            <div class="d-flex">
-                                                <div class="avatar avatar-cyan avatar-icon">
-                                                    <i class="anticon anticon-user-add"></i>
-                                                </div>
-                                                <div class="m-l-15">
-                                                    <p class="m-b-0 text-dark">New user registered</p>
-                                                    <p class="m-b-0"><small>7 hours ago</small></p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="javascript:void(0);" class="dropdown-item d-block p-15 border-bottom">
-                                            <div class="d-flex">
-                                                <div class="avatar avatar-red avatar-icon">
-                                                    <i class="anticon anticon-user-add"></i>
-                                                </div>
-                                                <div class="m-l-15">
-                                                    <p class="m-b-0 text-dark">System Alert</p>
-                                                    <p class="m-b-0"><small>8 hours ago</small></p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="javascript:void(0);" class="dropdown-item d-block p-15 ">
-                                            <div class="d-flex">
-                                                <div class="avatar avatar-gold avatar-icon">
-                                                    <i class="anticon anticon-user-add"></i>
-                                                </div>
-                                                <div class="m-l-15">
-                                                    <p class="m-b-0 text-dark">You have a new update</p>
-                                                    <p class="m-b-0"><small>2 days ago</small></p>
-                                                </div>
-                                            </div>
-                                        </a>
+                                    <a href="javascript:void(0);" class="dropdown-item d-block p-15 border-bottom">
+                                    <div class="d-flex">
+                                    <div class="avatar avatar-blue avatar-icon">
+                                    <i class="anticon anticon-mail"></i>
                                     </div>
-                                </div>*@
+                                    <div class="m-l-15">
+                                    <p class="m-b-0 text-dark">You received a new message</p>
+                                    <p class="m-b-0"><small>8 min ago</small></p>
+                                    </div>
+                                    </div>
+                                    </a>
+                                    <a href="javascript:void(0);" class="dropdown-item d-block p-15 border-bottom">
+                                    <div class="d-flex">
+                                    <div class="avatar avatar-cyan avatar-icon">
+                                    <i class="anticon anticon-user-add"></i>
+                                    </div>
+                                    <div class="m-l-15">
+                                    <p class="m-b-0 text-dark">New user registered</p>
+                                    <p class="m-b-0"><small>7 hours ago</small></p>
+                                    </div>
+                                    </div>
+                                    </a>
+                                    <a href="javascript:void(0);" class="dropdown-item d-block p-15 border-bottom">
+                                    <div class="d-flex">
+                                    <div class="avatar avatar-red avatar-icon">
+                                    <i class="anticon anticon-user-add"></i>
+                                    </div>
+                                    <div class="m-l-15">
+                                    <p class="m-b-0 text-dark">System Alert</p>
+                                    <p class="m-b-0"><small>8 hours ago</small></p>
+                                    </div>
+                                    </div>
+                                    </a>
+                                    <a href="javascript:void(0);" class="dropdown-item d-block p-15 ">
+                                    <div class="d-flex">
+                                    <div class="avatar avatar-gold avatar-icon">
+                                    <i class="anticon anticon-user-add"></i>
+                                    </div>
+                                    <div class="m-l-15">
+                                    <p class="m-b-0 text-dark">You have a new update</p>
+                                    <p class="m-b-0"><small>2 days ago</small></p>
+                                    </div>
+                                    </div>
+                                    </a>
+                                    </div>
+                                    </div>*@
                             </div>
                         </li>
                         <li class="dropdown dropdown-animated scale-left">
                             <div class="pointer" data-toggle="dropdown">
                                 <div class="avatar avatar-image  m-h-10 m-r-15">
-                                    <img src="~/assets/images/avatars/thumb-3.jpg"  alt="">
+                                    <img src="~/assets/images/avatars/thumb-3.jpg" alt="">
                                 </div>
                             </div>
                             <div class="p-b-15 p-t-20 dropdown-menu pop-profile">
@@ -135,12 +139,12 @@
                                             <img src="~/assets/images/avatars/thumb-3.jpg" alt="">
                                         </div>
                                         <div class="m-l-10">
-                                            <p class="m-b-0 text-dark font-weight-semibold">@_name</p>                                        
+                                            <p class="m-b-0 text-dark font-weight-semibold">@_name</p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <a href="~/Setting" class="dropdown-item d-block p-h-15 p-v-10">
+                                <a href="@Url.Action("","Setting")" class="dropdown-item d-block p-h-15 p-v-10">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
                                             <i class="anticon opacity-04 font-size-16 anticon-lock"></i>
@@ -150,7 +154,7 @@
                                     </div>
                                 </a>
 
-                                <a href="~/Logout" class="dropdown-item d-block p-h-15 p-v-10">
+                                <a href="@Url.Action("","LogOut")" class="dropdown-item d-block p-h-15 p-v-10">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
                                             <i class="anticon opacity-04 font-size-16 anticon-logout"></i>
@@ -168,9 +172,8 @@
                         </li>
                     </ul>
                 </div>
-            </div>    
+            </div>
             <!-- Header END -->
-
             <!-- Side Nav START -->
             <div class="side-nav">
                 <div class="side-nav-inner">
@@ -183,22 +186,22 @@
                                 <span class="title">Dashboard</span>
                                 @*<span class="arrow">
                                     <i class="arrow-icon"></i>
-                                </span>*@
+                                    </span>*@
                             </a>
                             @*<ul class="dropdown-menu">
                                 <li class="active">
-                                    <a href="~/index.html">Default</a>
+                                <a href="~/index.html">Default</a>
                                 </li>
                                 <li>
-                                    <a href="~/index-crm.html">CRM</a>
+                                <a href="~/index-crm.html">CRM</a>
                                 </li>
                                 <li>
-                                    <a href="~/index-e-commerce.html">E-commerce</a>
+                                <a href="~/index-e-commerce.html">E-commerce</a>
                                 </li>
                                 <li>
-                                    <a href="~/index-projects.html">Projects</a>
+                                <a href="~/index-projects.html">Projects</a>
                                 </li>
-                            </ul>*@
+                                </ul>*@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
@@ -222,12 +225,12 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-									<i class="anticon anticon-build"></i>
-								</span>
-                                <span class="title">Insurance Category</span>
+                                    <i class="anticon anticon-build"></i>
+                                </span>
+                                <span class="title">Insurance Type</span>
                                 <span class="arrow">
-									<i class="arrow-icon"></i>
-								</span>
+                                    <i class="arrow-icon"></i>
+                                </span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -269,10 +272,10 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="@Url.Action("","Faq")">List FAQ</a>
+                                    <a href="@Url.Action("","Faq")">List Question</a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("Create","Faq")">Add new FAQ</a>
+                                    <a href="@Url.Action("","Reply")">List Answer</a>
                                 </li>
                             </ul>
                         </li>
@@ -344,27 +347,43 @@
                                 <li>
                                     <a href="@Url.Action("","Contract")">Contract Manager</a>
                                 </li>
-                                <li>
-                                    <a href="@Url.Action("","Payment")">Payment Manager</a>
-                                </li>
                             </ul>
                         </li>
                     </ul>
                 </div>
             </div>
             <!-- Side Nav END -->
-
             <!-- Page Container START -->
             <div class="page-container">
-                
+
 
                 <!-- Content Wrapper START -->
                 <div class="main-content">
-                    @RenderBody()
-                </div>
-                
-                <!-- Content Wrapper END -->
+                    @RenderBody()                
+                    @if (ViewBag.TotalPage != null && ViewBag.TotalPage > 1)
+                    {
+                        var limit = ViewBag.Limit != null ? ViewBag.Limit : 10;
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item @(ViewBag.CurrentPage==1?"disabled":"")">
+                                    <a class="page-link" href="@Url.Action(_action,_controller, new {page = ViewBag.CurrentPage-1, limit=limit})" tabindex="-1">Previous</a>
+                                </li>
+                                @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                                {
+                                    <li class="page-item @(ViewBag.CurrentPage==i?"active":"")">
+                                        <a class="page-link" href="@Url.Action(_action,_controller, new {page = i, limit=limit})">@i</a>
+                                    </li>
+                                }
+                                <li class="page-item @(ViewBag.CurrentPage==ViewBag.TotalPage?"disabled":"")">
+                                    <a class="page-link" href="@Url.Action(_action,_controller, new {page = ViewBag.CurrentPage+1, limit=limit})">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    }
 
+                </div>
+
+                <!-- Content Wrapper END -->
                 <!-- Footer START -->
                 <footer class="footer">
                     <div class="footer-content">
@@ -379,7 +398,6 @@
 
             </div>
             <!-- Page Container END -->
-
             <!-- Search Start-->
             <div class="modal modal-left fade search" id="search-drawer">
                 <div class="modal-dialog">
@@ -463,9 +481,9 @@
                                         <p class="m-b-0 text-muted font-size-13">Data Analyst</p>
                                     </div>
                                 </div>
-                            </div>   
+                            </div>
                             <div class="m-t-30">
-                                <h5 class="m-b-20">News</h5> 
+                                <h5 class="m-b-20">News</h5>
                                 <div class="d-flex m-b-30">
                                     <div class="avatar avatar-image">
                                         <img src="~/assets/images/others/img-1.jpg" alt="">
@@ -478,13 +496,12 @@
                                         </p>
                                     </div>
                                 </div>
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Search End-->
-
             <!-- Quick View START -->
             <div class="modal modal-right fade quick-view" id="quick-view">
                 <div class="modal-dialog">
@@ -539,7 +556,7 @@
                             </div>
                         </div>
                     </div>
-                </div>            
+                </div>
             </div>
             <!-- Quick View END -->
         </div>

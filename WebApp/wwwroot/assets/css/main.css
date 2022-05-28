@@ -26,3 +26,49 @@
 .main-content {
     overflow-x:auto;
 }
+.ct {
+    margin: 0 auto;
+    text-align:center;
+}
+.col-sm-img {
+    margin: 0 auto;
+    text-align: center;
+    width:100%;
+}
+    .col-sm-img>img {
+        width:40%;
+    }
+    textarea.form-control {
+        height: 150px;
+    }
+dl.row {
+    line-height: 2.5rem;
+}
+.table td > img {
+    width: 150px;
+}
+span.dis {
+    background: #ff4545;
+    color: white;
+    padding: 5px;
+}
+span.act {
+    background: #3759e7;
+    color: white;
+    padding: 5px;
+}
+span.completed {
+    background: #5b5be7;
+    padding: 5px;
+    color: white;
+}
+span.cancelled {
+    background: #f23a3a;
+    padding: 5px;
+    color: white;
+}
+span.maintaining {
+    background: #908668;
+    padding: 5px;
+    color: white;
+}

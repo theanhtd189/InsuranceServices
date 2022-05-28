@@ -1,11 +1,11 @@
-﻿@model IEnumerable<WebApp.Models.Feedback>
+﻿@model X.PagedList.IPagedList<WebApp.Models.Feedback>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>List</h1>
+<h1>Feedback Manager</h1>
 
 <p>
     <a asp-action="Create" class="ta-btn">Create New</a>
@@ -13,41 +13,29 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                Customer
+            </th>
+            <th>
+                Insurance
+            </th>
             <th class="processed">
-                @Html.DisplayNameFor(model => model.FeedbackContent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Insurance)
-            </th>
-            <th></th>
+                Feedback
+            </th>           
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Customer.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Insurance.Name)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.FeedbackContent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Insurance.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.FeedbackId">Edit</a> |

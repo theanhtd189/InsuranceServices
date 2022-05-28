@@ -123,8 +123,8 @@ namespace WebApp.Controllers
                 var stt = db.SaveChanges() > 0;
                 if (stt)
                 {
-                    var init = o.Total;
-                    o.Total = init + e.PaidAmount;
+                    /*var init = o.Total;
+                    o.Total = init + e.PaidAmount;*/
                     db.SaveChanges();
                     TempData["Msg"] = "Paid successfully!";
                 }

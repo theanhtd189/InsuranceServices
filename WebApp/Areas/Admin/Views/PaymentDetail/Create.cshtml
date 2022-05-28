@@ -1,0 +1,42 @@
+﻿@model WebApp.Models.PaymentDetail
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create Payment For Contract #@ViewBag.ContractId</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" name="PaymentId" value="@ViewBag.PaymentId" />
+            <input type="hidden" name="ContractId" value="@ViewBag.ContractId" />
+            <input type="hidden" name="UpdatedAt" value="@DateTime.Now" />
+            <div class="form-group">
+                <label asp-for="PaidAmount" class="control-label">Amount to pay</label>
+                <input asp-for="PaidAmount" class="form-control" />
+                <span asp-validation-for="PaidAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContentDetails" class="control-label">Content</label>
+                <input asp-for="ContentDetails" class="form-control" />
+                <span asp-validation-for="ContentDetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PeriodicId" class="control-label">Month</label>
+                <select asp-for="PeriodicId" class="form-control" asp-items="ViewBag.PeriodicId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href="@Url.Action("Details","Contract", new {id=ViewBag.ContractId})">Back to List</a>
+</div>
+

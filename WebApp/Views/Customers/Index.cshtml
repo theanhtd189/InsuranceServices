@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WebApp.Models.Customer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -40,7 +40,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Birthday)
             </th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
