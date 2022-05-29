@@ -1,0 +1,104 @@
+﻿@using WebApp.Models;
+@using X.PagedList;
+@model IPagedList<Feedback>
+
+@{
+    ViewBag.Title = "Your feedbacks list";
+}
+
+<!-- BANNER -->
+<div class="section banner-page about">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="title-page">Account</div>
+                <ol class="breadcrumb">
+                    <li><a href="#">Feedback List</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="section cta">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-7 col-md-offset-1">
+                <h3 class="cta-desc">Feedback to help make our service be better</h3>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <a href="@Url.Action("Create","Feedbacks")" title="" class="btn btn-orange-cta pull-right btn-view-all">Create A Feedback</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Team -->
+<div class="section about section-border">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <h2 class="section-heading">
+                    Your feedback
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+
+            @{
+                if (Model != null && Model.Count > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <div class="col-sm-6 col-md-6">
+                            <div class="box-team">
+                                <div class="box-image">
+                                    <img src="@item.Insurance.Image" alt="">
+                                </div>
+                                <div class="body-content">
+                                    <div class="people">@item.Insurance.Category.CategoryName</div>
+                                    <div class="position">@item.Insurance.Name</div>
+                                    <div class="detail-text">
+                                        <span class="fa fa-file-text"> </span> Content:
+                                        <a href="@Url.Action("Edit","Feedbacks",new {id=item.FeedbackId})"> View</a>
+                                    </div>
+                                    <div class="detail-text">
+                                        <span class="fa fa-bookmark-o"></span>
+                                        Posted at: @item.CreatedAt.Value.ToString("d")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <h3>You didn't post any feedbacks</h3>
+                }
+            }
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <ul class="pagination">
+                    @{
+                        var list = ViewBag.TotalPage;
+                        if (list != null)
+                        {
+                            var c = ViewBag.Page;
+                            for (int i = 1; i <= list; i++)
+                            {
+                                <li class="@((i==c)?"active":"")">
+                                    <a href="@Url.Action("","Feedbacks", new {page=i})">@i</a>
+                                </li>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
