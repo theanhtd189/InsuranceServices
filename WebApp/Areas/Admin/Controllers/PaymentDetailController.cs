@@ -155,7 +155,7 @@ namespace WebApp.Areas.Admin.Controllers
             var paymentDetail = await db.PaymentDetails.FindAsync(id);
             if (paymentDetail != null)
             {
-                db.PaymentDetails.Remove(paymentDetail);
+                db.Remove(paymentDetail);
             }
             
             await db.SaveChangesAsync();

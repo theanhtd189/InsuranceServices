@@ -24,9 +24,6 @@
             <th>
                 Created At
             </th>
-            <th>
-                Content
-            </th>
             <th>Action</th>
         </tr>
     </thead>
@@ -45,9 +42,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CreatedAt)
-                </td>
-                <td class="processed">
-                    @Html.DisplayFor(modelItem => item.Content)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

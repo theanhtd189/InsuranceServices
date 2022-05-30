@@ -196,9 +196,26 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return Problem("Entity set 'InsuranceOnlineContext.Insurances'  is null.");
             }
-            var insurance = await db.Insurances.FindAsync(id);
+            var insurance = await db.Insurances.FirstOrDefaultAsync(x=>x.Id==id);
             if (insurance != null)
             {
+                db.Feedbacks.RemoveRange(db.Feedbacks.Where(x=>x.InsuranceId==id));
+                var contract = db.Contracts.Where(x=>x.InsuranceId==id);
+                var pay = db.Payments
+                    .Include(x =>x.Contract)
+                    .ThenInclude(x=>x.Insurance)
+                    .Where(x => x.Contract.InsuranceId == id);
+                if (pay != null)
+                {
+                    var contractid = pay.Select(x => x.ContractId).FirstOrDefault();
+                    foreach(var item in pay.Select(x => x.Id).ToList())
+                    {
+                        db.PaymentDetails.RemoveRange(db.PaymentDetails.Where(x=>x.PaymentId==item));
+                    }
+                    db.Payments.RemoveRange(pay);
+                 //   db.Contracts.Remove(db.Contracts.FirstOrDefault(x=>x.Id==contractid));
+
+                }
                 db.Insurances.Remove(insurance);
             }
             

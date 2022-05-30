@@ -169,11 +169,13 @@ namespace WebApp.Models
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Feedbacks)
                     .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Feedbacks_Customers");
 
                 entity.HasOne(d => d.Insurance)
                     .WithMany(p => p.Feedbacks)
                     .HasForeignKey(d => d.InsuranceId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Feedbacks_Insurances");
             });
 
@@ -227,6 +229,7 @@ namespace WebApp.Models
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Loans)
                     .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Loans_Customers");
             });
 
@@ -255,6 +258,7 @@ namespace WebApp.Models
                 entity.HasOne(d => d.Contract)
                     .WithMany(p => p.Payments)
                     .HasForeignKey(d => d.ContractId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Payments_Contracts");
             });
 
@@ -317,6 +321,7 @@ namespace WebApp.Models
                 entity.HasOne(d => d.Insurance)
                     .WithMany(p => p.Policies)
                     .HasForeignKey(d => d.InsuranceId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Policies_Insurances");
             });
 

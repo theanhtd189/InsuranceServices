@@ -90,14 +90,22 @@ namespace WebApp.Controllers
                 var o = db.Customers.FirstOrDefault(x=>x.Email==email && x.Password==password);
                 if (o != null)
                 {
-                    HttpContext.Session.SetInt32("user_id",o.Id);
-
-                    if (callback != null && !string.IsNullOrEmpty(callback))
+                    if (o.Status==false)
                     {
-                        return Redirect(callback);
+                        ViewBag.Error = "Your account has been deactive! Please contact admin!";
                     }
                     else
-                    return RedirectToAction("","Account");
+                    {
+                        HttpContext.Session.SetInt32("user_id", o.Id);
+
+                        if (callback != null && !string.IsNullOrEmpty(callback))
+                        {
+                            return Redirect(callback);
+                        }
+                        else
+                            return RedirectToAction("", "Account");
+                    }
+                    
                 }
                 else
                 {
